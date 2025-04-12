@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Ninjas - Task 3: Phishing Infrastructure</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        .sidebar {
+            width: 250px;
+            background-color: #1a2b3c;
+            color: white;
+            padding: 30px 20px;
+            height: 100vh;
+            position: fixed;
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .logo h1 {
+            font-size: 28px;
+            font-weight: bold;
+            line-height: 1;
+        }
+        
+        .logo h1:first-child {
+            color: #4fc3f7;
+        }
+        
+        .logo h1:last-child {
+            color: white;
+        }
+        
+        .nav-section {
+            margin-bottom: 30px;
+        }
+        
+        .nav-section h3 {
+            color: #4fc3f7;
+            margin-bottom: 15px;
+            font-size: 16px;
+            text-transform: uppercase;
+        }
+        
+        .nav-links a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 10px 0;
+            margin-bottom: 5px;
+            transition: all 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #4fc3f7;
+            transform: translateX(5px);
+        }
+        
+        .main-content {
+            margin-left: 250px;
+            padding: 40px;
+            width: calc(100% - 250px);
+        }
+        
+        .module-header {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .module-header h1 {
+            color: #1a2b3c;
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+        
+        .module-header p {
+            color: #666;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        
+        .task-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .task-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .task-number {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: #4fc3f7;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            margin-right: 15px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .task-title {
+            color: #1a2b3c;
+            font-size: 28px;
+        }
+        
+        .task-content {
+            padding: 20px 0;
+        }
+        
+        .task-content p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+        
+        .infrastructure-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+        
+        .infrastructure-card {
+            border: 1px solid #eee;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .infrastructure-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .infrastructure-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .infrastructure-details {
+            padding: 20px;
+        }
+        
+        .infrastructure-name {
+            color: #1a2b3c;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        
+        .infrastructure-desc {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        .infrastructure-steps {
+            margin-top: 15px;
+            padding-left: 15px;
+        }
+        
+        .infrastructure-steps li {
+            color: #666;
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+        
+        .completion-section {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .completion-title {
+            color: #1a2b3c;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        
+        .completion-message {
+            color: #666;
+            margin-bottom: 25px;
+            font-size: 16px;
+        }
+        
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+        }
+        
+        .checkbox-label {
+            color: #1a2b3c;
+            font-size: 18px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+        
+        .complete-button {
+            background-color: #4fc3f7;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .complete-button:hover {
+            background-color: #3ba7d3;
+        }
+        
+        .complete-button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        
+        .warning-box {
+            background-color: #fff8e1;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        .warning-title {
+            color: #ff9800;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <h1>CYBER</h1>
+            <h1>NINJAS</h1>
+        </div>
+        
+        <div class="nav-section">
+            <h3>Menu</h3>
+            <div class="nav-links">
+                <a href="dashboard.html">DASHBOARD</a>
+                <a href="#">LEARN</a>
+                <a href="#">OTHERS</a>
+            </div>
+        </div>
+        
+        <div class="nav-section">
+            <h3>Quick Links</h3>
+            <div class="nav-links">
+                <a href="#">SEARCH</a>
+                <a href="#">NOTIFICATION</a>
+                <a href="#">PROFILE</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="main-content">
+        <div class="module-header">
+            <h1>PHISHING AWARENESS</h1>
+            <p>UNDERSTAND HOW PHISHING INFRASTRUCTURE WORKS AND HOW ATTACKERS SET UP THEIR CAMPAIGNS</p>
+        </div>
+        
+        <div class="task-container">
+            <div class="task-header">
+                <div class="task-number">3</div>
+                <h2 class="task-title">TASK 3: PHISHING INFRASTRUCTURE</h2>
+            </div>
+            
+            <div class="task-content">
+                <p>Phishing attacks require sophisticated infrastructure to appear legitimate. Attackers use various tools and techniques to create convincing fake websites, emails, and communications. Understanding this infrastructure helps you recognize phishing attempts more effectively.</p>
+                
+                <div class="warning-box">
+                    <div class="warning-title">IMPORTANT NOTE</div>
+                    <p>The information below is for educational purposes only. Understanding attacker methods helps in defense, but never attempt to recreate these techniques.</p>
+                </div>
+                
+                <div class="infrastructure-grid">
+                    <!-- Card 1: Domain Spoofing -->
+                    <div class="infrastructure-card">
+                        <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Domain Spoofing" class="infrastructure-image">
+                        <div class="infrastructure-details">
+                            <h3 class="infrastructure-name">1. Domain Spoofing</h3>
+                            <p class="infrastructure-desc">Attackers register domains that look similar to legitimate ones (e.g., "paypa1.com" instead of "paypal.com").</p>
+                            <ul class="infrastructure-steps">
+                                <li>Uses homograph attacks (replacing letters with similar-looking characters)</li>
+                                <li>Adds subdomains (e.g., "paypal.security-alert.com")</li>
+                                <li>Uses international domain names with foreign characters</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Card 2: Email Spoofing -->
+                    <div class="infrastructure-card">
+                        <img src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Email Spoofing" class="infrastructure-image">
+                        <div class="infrastructure-details">
+                            <h3 class="infrastructure-name">2. Email Spoofing</h3>
+                            <p class="infrastructure-desc">Forging email headers to make messages appear from trusted sources.</p>
+                            <ul class="infrastructure-steps">
+                                <li>Uses SMTP vulnerabilities to fake sender addresses</li>
+                                <li>Creates display names that mimic real contacts</li>
+                                <li>Uses compromised accounts to send from real addresses</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Card 3: Web Hosting -->
+                    <div class="infrastructure-card">
+                        <img src="https://images.unsplash.com/photo-1614064641938-3bbee52942c7?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Web Hosting" class="infrastructure-image">
+                        <div class="infrastructure-details">
+                            <h3 class="infrastructure-name">3. Fake Websites</h3>
+                            <p class="infrastructure-desc">Hosting replica websites to harvest credentials.</p>
+                            <ul class="infrastructure-steps">
+                                <li>Uses free or compromised hosting services</li>
+                                <li>Implements SSL certificates to appear secure</li>
+                                <li>Clones legitimate sites with minor changes</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Card 4: Malware Delivery -->
+                    <div class="infrastructure-card">
+                        <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Malware Delivery" class="infrastructure-image">
+                        <div class="infrastructure-details">
+                            <h3 class="infrastructure-name">4. Malware Delivery</h3>
+                            <p class="infrastructure-desc">Systems to distribute malicious payloads.</p>
+                            <ul class="infrastructure-steps">
+                                <li>Uses cloud storage for hosting malicious files</li>
+                                <li>Embeds malware in documents (PDFs, Word files)</li>
+                                <li>Uses exploit kits on compromised websites</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Card 5: Data Collection -->
+                    <div class="infrastructure-card">
+                        <img src="https://images.unsplash.com/photo-1563206767-5b18f218e8de?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Data Collection" class="infrastructure-image">
+                        <div class="infrastructure-details">
+                            <h3 class="infrastructure-name">5. Data Collection</h3>
+                            <p class="infrastructure-desc">Systems to harvest and process stolen data.</p>
+                            <ul class="infrastructure-steps">
+                                <li>Uses web forms that submit to attacker servers</li>
+                                <li>Implements automated credential processing</li>
+                                <li>Uses Telegram bots or other messaging for alerts</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Card 6: Evasion Techniques -->
+                    <div class="infrastructure-card">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Evasion Techniques" class="infrastructure-image">
+                        <div class="infrastructure-details">
+                            <h3 class="infrastructure-name">6. Evasion Techniques</h3>
+                            <p class="infrastructure-desc">Methods to avoid detection by security systems.</p>
+                            <ul class="infrastructure-steps">
+                                <li>Uses URL shorteners and redirects</li>
+                                <li>Implements geofencing to show different content</li>
+                                <li>Uses JavaScript to hide malicious elements</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3 style="color: #1a2b3c; margin: 30px 0 15px;">How to Identify Phishing Infrastructure:</h3>
+                <ul style="color: #666; line-height: 1.6; margin-bottom: 15px; padding-left: 20px;">
+                    <li><strong>Check domain names carefully</strong> - Look for subtle misspellings</li>
+                    <li><strong>Inspect email headers</strong> - Verify the actual sender address</li>
+                    <li><strong>Hover over links</strong> - Check where they actually lead</li>
+                    <li><strong>Look for poor SSL implementation</strong> - Check certificate details</li>
+                    <li><strong>Verify website design</strong> - Look for inconsistencies with official sites</li>
+                    <li><strong>Be wary of urgency</strong> - Phishing often creates false urgency</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="completion-section">
+            <h3 class="completion-title">Task Completion</h3>
+            <p class="completion-message">Please confirm you have read and understood the material to mark this task as complete.</p>
+            
+            <div class="checkbox-container">
+                <input type="checkbox" id="completion-checkbox">
+                <label for="completion-checkbox" class="checkbox-label">I confirm I have completed this task</label>
+            </div>
+            
+            <button id="complete-button" class="complete-button" disabled>Mark as Complete</button>
+        </div>
+    </div>
+
+    <script>
+        // Enable complete button when checkbox is checked
+        const checkbox = document.getElementById('completion-checkbox');
+        const completeButton = document.getElementById('complete-button');
+        
+        checkbox.addEventListener('change', function() {
+            completeButton.disabled = !this.checked;
+        });
+        
+        // Handle completion
+        completeButton.addEventListener('click', function() {
+            // In a real application, you would save this completion status to a database
+            alert('Task 3 marked as complete! You can now proceed to Task 4.');
+            
+            // Optionally redirect to the next task
+            // window.location.href = 'task4.html';
+        });
+    </script>
+</body>
+</html>
