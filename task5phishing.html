@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cyber Ninjas - Task 5: Phishing Quiz</title>
+    <title>Cyber Ninjas - Phishing Awareness: Knowledge Test</title>
     <style>
         * {
             margin: 0;
@@ -97,7 +97,7 @@
             line-height: 1.6;
         }
         
-        .task-container {
+        .quiz-container {
             background-color: white;
             padding: 30px;
             border-radius: 8px;
@@ -134,96 +134,155 @@
             color: #666;
             line-height: 1.6;
             margin-bottom: 30px;
-            font-size: 16px;
-        }
-        
-        .quiz-container {
-            margin: 20px 0;
-        }
-        
-        .question {
-            margin-bottom: 30px;
             padding-bottom: 20px;
             border-bottom: 1px solid #eee;
         }
         
-        .question:last-child {
+        .quiz-item {
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .quiz-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
             border-bottom: none;
         }
         
-        .question-text {
+        .question {
             color: #1a2b3c;
-            font-size: 18px;
-            margin-bottom: 15px;
+            font-size: 20px;
+            margin-bottom: 20px;
             font-weight: bold;
         }
         
         .options {
-            margin-left: 20px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
         }
         
         .option {
-            margin-bottom: 10px;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
+            padding: 15px;
+            border-radius: 6px;
+            background-color: #f9f9f9;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid #ddd;
+        }
+        
+        .option:hover {
+            background-color: #f0f0f0;
+        }
+        
+        .option.selected {
+            border-color: #4fc3f7;
+            background-color: #f0f9ff;
+        }
+        
+        .option.correct {
+            border-color: #4caf50;
+            background-color: #e8f5e9;
+        }
+        
+        .option.incorrect {
+            border-color: #f44336;
+            background-color: #ffebee;
         }
         
         .option input {
-            margin-right: 10px;
+            margin-right: 15px;
+            margin-top: 3px;
         }
         
-        .option label {
-            color: #666;
-            cursor: pointer;
+        .option-label {
+            flex-grow: 1;
+            color: #333;
         }
         
         .feedback {
-            padding: 10px;
-            margin-top: 10px;
-            border-radius: 4px;
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 6px;
             display: none;
         }
         
-        .correct {
+        .correct-feedback {
             background-color: #e8f5e9;
             color: #2e7d32;
             border-left: 4px solid #4caf50;
         }
         
-        .incorrect {
+        .incorrect-feedback {
             background-color: #ffebee;
             color: #c62828;
             border-left: 4px solid #f44336;
         }
         
-        .quiz-result {
-            text-align: center;
-            padding: 20px;
-            margin: 30px 0;
+        .quiz-results {
+            background-color: white;
+            padding: 30px;
             border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            text-align: center;
             display: none;
         }
         
-        .quiz-passed {
-            background-color: #e8f5e9;
-            color: #2e7d32;
-            border: 2px solid #4caf50;
-        }
-        
-        .quiz-failed {
-            background-color: #ffebee;
-            color: #c62828;
-            border: 2px solid #f44336;
-        }
-        
-        .result-score {
+        .results-title {
+            color: #1a2b3c;
             font-size: 24px;
-            font-weight: bold;
-            margin: 10px 0;
+            margin-bottom: 15px;
         }
         
-        .result-message {
-            margin-bottom: 15px;
+        .score-display {
+            font-size: 48px;
+            font-weight: bold;
+            color: #4fc3f7;
+            margin: 20px 0;
+        }
+        
+        .score-message {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+        
+        .retake-button {
+            background-color: #f5f5f5;
+            color: #1a2b3c;
+            border: 2px solid #1a2b3c;
+            padding: 12px 30px;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-right: 15px;
+            transition: all 0.3s;
+        }
+        
+        .retake-button:hover {
+            background-color: #1a2b3c;
+            color: white;
+        }
+        
+        .continue-button {
+            background-color: #4fc3f7;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .continue-button:hover {
+            background-color: #3ba7d3;
         }
         
         .completion-section {
@@ -280,23 +339,6 @@
             background-color: #cccccc;
             cursor: not-allowed;
         }
-        
-        .submit-quiz {
-            background-color: #1a2b3c;
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 5px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            margin: 20px 0;
-            transition: background-color 0.3s;
-        }
-        
-        .submit-quiz:hover {
-            background-color: #2c3e50;
-        }
     </style>
 </head>
 <body>
@@ -327,230 +369,269 @@
     
     <div class="main-content">
         <div class="module-header">
-            <h1>PHISHING AWARENESS</h1>
-            <p>TEST YOUR KNOWLEDGE WITH THIS PHISHING AWARENESS QUIZ</p>
+            <h1>PHISHING AWARENESS KNOWLEDGE TEST</h1>
+            <p>ASSESS YOUR UNDERSTANDING OF PHISHING CONCEPTS AND BEST PRACTICES.</p>
         </div>
         
-        <div class="task-container">
+        <div class="quiz-container">
             <div class="task-header">
                 <div class="task-number">5</div>
-                <h2 class="task-title">TASK 5: PHISHING QUIZ</h2>
+                <h2 class="task-title">KNOWLEDGE TEST</h2>
             </div>
             
             <div class="quiz-intro">
-                <p>This quiz will test your understanding of phishing concepts covered in the previous tasks. Answer all questions to complete the module. You'll receive immediate feedback on each question and your overall score at the end.</p>
+                <p>This quiz will test your understanding of phishing awareness concepts covered in previous tasks. Select the best answer for each question. You'll receive immediate feedback after submitting your answers.</p>
             </div>
             
-            <div class="quiz-container" id="quiz">
-                <!-- Question 1 -->
-                <div class="question">
-                    <div class="question-text">1. What is the most common characteristic of a phishing email?</div>
+            <form id="quiz-form">
+                <div class="quiz-item">
+                    <div class="question">1. What is the most common characteristic of a phishing email?</div>
                     <div class="options">
-                        <div class="option">
-                            <input type="radio" name="q1" id="q1a" value="a">
-                            <label for="q1a">It contains spelling and grammar mistakes</label>
-                        </div>
-                        <div class="option">
-                            <input type="radio" name="q1" id="q1b" value="b">
-                            <label for="q1b">It creates a sense of urgency</label>
-                        </div>
-                        <div class="option">
-                            <input type="radio" name="q1" id="q1c" value="c">
-                            <label for="q1c">It comes from an unknown sender</label>
-                        </div>
-                        <div class="option">
-                            <input type="radio" name="q1" id="q1d" value="d">
-                            <label for="q1d">It includes attachments</label>
-                        </div>
+                        <label class="option">
+                            <input type="radio" name="q1" value="a">
+                            <span class="option-label">It contains spelling and grammar mistakes</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q1" value="b">
+                            <span class="option-label">It creates a sense of urgency</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q1" value="c">
+                            <span class="option-label">It comes from an unknown sender</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q1" value="d">
+                            <span class="option-label">It includes attachments</span>
+                        </label>
                     </div>
-                    <div class="feedback" id="feedback-q1"></div>
+                    <div class="feedback correct-feedback" id="feedback-q1-correct">
+                        Correct! While phishing emails often contain spelling mistakes and come from unknown senders, the most common characteristic is creating a sense of urgency to prompt immediate action.
+                    </div>
+                    <div class="feedback incorrect-feedback" id="feedback-q1-incorrect">
+                        Incorrect. The correct answer is: It creates a sense of urgency.
+                    </div>
                 </div>
                 
-                <!-- Question 2 -->
-                <div class="question">
-                    <div class="question-text">2. Which of these is an example of domain spoofing?</div>
+                <div class="quiz-item">
+                    <div class="question">2. Which of these is an example of domain spoofing?</div>
                     <div class="options">
-                        <div class="option">
-                            <input type="radio" name="q2" id="q2a" value="a">
-                            <label for="q2a">microsoft-security-alert.com</label>
-                        </div>
-                        <div class="option">
-                            <input type="radio" name="q2" id="q2b" value="b">
-                            <label for="q2b">security.microsoft.com</label>
-                        </div>
-                        <div class="option">
-                            <input type="radio" name="q2" id="q2c" value="c">
-                            <label for="q2c">microsoft.com/security</label>
-                        </div>
-                        <div class="option">
-                            <input type="radio" name="q2" id="q2d" value="d">
-                            <label for="q2d">login.microsoftonline.com</label>
-                        </div>
+                        <label class="option">
+                            <input type="radio" name="q2" value="a">
+                            <span class="option-label">microsoft-security-alert.com</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q2" value="b">
+                            <span class="option-label">security.microsoft.com</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q2" value="c">
+                            <span class="option-label">microsoft.com/security</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q2" value="d">
+                            <span class="option-label">login.microsoftonline.com</span>
+                        </label>
                     </div>
-                    <div class="feedback" id="feedback-q2"></div>
+                    <div class="feedback correct-feedback" id="feedback-q2-correct">
+                        Correct! 'microsoft-security-alert.com' is an example of domain spoofing, trying to appear related to Microsoft while being a completely separate domain.
+                    </div>
+                    <div class="feedback incorrect-feedback" id="feedback-q2-incorrect">
+                        Incorrect. The correct answer is: microsoft-security-alert.com.
+                    </div>
                 </div>
                 
-                <!-- Question 3 -->
-                <div class="question">
-                    <div class="question-text">3. What should you do if you receive a suspicious email that appears to be from your bank?</div>
+                <div class="quiz-item">
+                    <div class="question">3. What should you do if you receive a suspicious email that appears to be from your bank?</div>
                     <div class="options">
-                        <div class="option">
-                            <input type="radio" name="q3" id="q3a" value="a">
-                            <label for="q3a">Click on links to verify the website</label>
-                        </div>
-                        <div class="option">
-                            <input type="radio" name="q3" id="q3b" value="b">
-                            <label for="q3b">Reply to the email asking for verification</label>
-                        </div>
-                        <div class="option">
-                            <input type="radio" name="q3" id="q3c" value="c">
-                            <label for="q3c">Contact your bank using a known phone number</label>
-                        </div>
-                        <div class="option">
-                            <input type="radio" name="q3" id="q3d" value="d">
-                            <label for="q3d">Forward it to coworkers to warn them</label>
-                        </div>
+                        <label class="option">
+                            <input type="radio" name="q3" value="a">
+                            <span class="option-label">Click on links to verify the website</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q3" value="b">
+                            <span class="option-label">Reply to the email asking for verification</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q3" value="c">
+                            <span class="option-label">Contact your bank using a known phone number</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q3" value="d">
+                            <span class="option-label">Forward it to coworkers to warn them</span>
+                        </label>
                     </div>
-                    <div class="feedback" id="feedback-q3"></div>
+                    <div class="feedback correct-feedback" id="feedback-q3-correct">
+                        Correct! You should always contact the organization directly using a known, trusted phone number or website (not from the email).
+                    </div>
+                    <div class="feedback incorrect-feedback" id="feedback-q3-incorrect">
+                        Incorrect. The correct answer is: Contact your bank using a known phone number.
+                    </div>
                 </div>
                 
-                <!-- Question 4 -->
-                <div class="question">
-                    <div class="question-text">4. Which of these is NOT a recommended phishing prevention technique?</div>
+                <div class="quiz-item">
+                    <div class="question">4. Which of these is NOT a recommended phishing prevention technique?</div>
                     <div class="options">
-                        <div class="option">
-                            <input type="radio" name="q4" id="q4a" value="a">
-                            <label for="q4a">Using multi-factor authentication</label>
-                        </div>
-                        <div class="option">
-                            <input type="radio" name="q4" id="q4b" value="b">
-                            <label for="q4b">Hovering over links before clicking</label>
-                        </div>
-                        <div class="option">
-                            <input type="radio" name="q4" id="q4c" value="c">
-                            <label for="q4c">Using the same password for multiple accounts</label>
-                        </div>
-                        <div class="option">
-                            <input type="radio" name="q4" id="q4d" value="d">
-                            <label for="q4d">Keeping software updated</label>
-                        </div>
+                        <label class="option">
+                            <input type="radio" name="q4" value="a">
+                            <span class="option-label">Using multi-factor authentication</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q4" value="b">
+                            <span class="option-label">Hovering over links before clicking</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q4" value="c">
+                            <span class="option-label">Using the same password for multiple accounts</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q4" value="d">
+                            <span class="option-label">Keeping software updated</span>
+                        </label>
                     </div>
-                    <div class="feedback" id="feedback-q4"></div>
+                    <div class="feedback correct-feedback" id="feedback-q4-correct">
+                        Correct! Using the same password for multiple accounts is dangerous because if one account is compromised, all accounts become vulnerable.
+                    </div>
+                    <div class="feedback incorrect-feedback" id="feedback-q4-incorrect">
+                        Incorrect. The correct answer is: Using the same password for multiple accounts.
+                    </div>
                 </div>
                 
-                <!-- Question 5 -->
-                <div class="question">
-                    <div class="question-text">5. What is "whaling" in cybersecurity terms?</div>
+                <div class="quiz-item">
+                    <div class="question">5. What is "whaling" in cybersecurity terms?</div>
                     <div class="options">
-                        <div class="option">
-                            <input type="radio" name="q5" id="q5a" value="a">
-                            <label for="q5a">A type of malware that encrypts files</label>
-                        </div>
-                        <div class="option">
-                            <input type="radio" name="q5" id="q5b" value="b">
-                            <label for="q5b">Phishing attacks targeting high-level executives</label>
-                        </div>
-                        <div class="option">
-                            <input type="radio" name="q5" id="q5c" value="c">
-                            <label for="q5c">A security protocol for email encryption</label>
-                        </div>
-                        <div class="option">
-                            <input type="radio" name="q5" id="q5d" value="d">
-                            <label for="q5d">A type of denial-of-service attack</label>
-                        </div>
+                        <label class="option">
+                            <input type="radio" name="q5" value="a">
+                            <span class="option-label">A type of malware that encrypts files</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q5" value="b">
+                            <span class="option-label">Phishing attacks targeting high-level executives</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q5" value="c">
+                            <span class="option-label">A security protocol for email encryption</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q5" value="d">
+                            <span class="option-label">A type of denial-of-service attack</span>
+                        </label>
                     </div>
-                    <div class="feedback" id="feedback-q5"></div>
+                    <div class="feedback correct-feedback" id="feedback-q5-correct">
+                        Correct! Whaling refers to highly targeted phishing attacks aimed at senior executives or high-profile individuals.
+                    </div>
+                    <div class="feedback incorrect-feedback" id="feedback-q5-incorrect">
+                        Incorrect. The correct answer is: Phishing attacks targeting high-level executives.
+                    </div>
                 </div>
                 
-                <button class="submit-quiz" id="submit-quiz">Submit Quiz</button>
-                <div class="quiz-result" id="quiz-result"></div>
+                <button type="button" id="submit-quiz" class="complete-button">Submit Quiz</button>
+            </form>
+        </div>
+        
+        <div class="quiz-results" id="quiz-results">
+            <h3 class="results-title">Quiz Results</h3>
+            <div class="score-display" id="score-display">0/5</div>
+            <p class="score-message" id="score-message"></p>
+            <div>
+                <button type="button" class="retake-button" id="retake-button">Retake Quiz</button>
+                <button type="button" class="continue-button" id="continue-button">Continue</button>
             </div>
         </div>
         
-        <div class="completion-section">
-            <h3 class="completion-title">Task Completion</h3>
-            <p class="completion-message">Please confirm you have completed the quiz to mark this task as complete.</p>
+        <div class="completion-section" id="completion-section">
+            <h3 class="completion-title">Module Completion</h3>
+            <p class="completion-message">Please confirm you have completed all tasks in this module.</p>
             
             <div class="checkbox-container">
                 <input type="checkbox" id="completion-checkbox">
-                <label for="completion-checkbox" class="checkbox-label">I confirm I have completed this task</label>
+                <label for="completion-checkbox" class="checkbox-label">I confirm I have completed this module</label>
             </div>
             
-            <button id="complete-button" class="complete-button" disabled>Mark as Complete</button>
+            <button id="complete-button" class="complete-button" disabled>Mark Module Complete</button>
         </div>
     </div>
 
     <script>
-        // Quiz answers
-        const quizAnswers = {
-            q1: "b",
-            q2: "a",
-            q3: "c",
-            q4: "c",
-            q5: "b"
-        };
-        
-        // Quiz explanations
-        const quizExplanations = {
-            q1: "While phishing emails often contain spelling mistakes and come from unknown senders, the most common characteristic is creating a sense of urgency to prompt immediate action.",
-            q2: "'microsoft-security-alert.com' is an example of domain spoofing, trying to appear related to Microsoft while being a completely separate domain.",
-            q3: "You should always contact the organization directly using a known, trusted phone number or website (not from the email).",
-            q4: "Using the same password for multiple accounts is dangerous because if one account is compromised, all accounts become vulnerable.",
-            q5: "Whaling refers to highly targeted phishing attacks aimed at senior executives or high-profile individuals."
-        };
-        
-        // Submit quiz handler
+        // Quiz functionality
         document.getElementById('submit-quiz').addEventListener('click', function() {
+            // Calculate score
             let score = 0;
-            const totalQuestions = Object.keys(quizAnswers).length;
+            const correctAnswers = {
+                q1: 'b',
+                q2: 'a',
+                q3: 'c',
+                q4: 'c',
+                q5: 'b'
+            };
             
-            // Check each question
-            for (let i = 1; i <= totalQuestions; i++) {
+            // Check answers and show feedback
+            for (let i = 1; i <= 5; i++) {
                 const questionName = 'q' + i;
                 const selectedOption = document.querySelector(`input[name="${questionName}"]:checked`);
-                const feedbackElement = document.getElementById(`feedback-${questionName}`);
                 
                 if (selectedOption) {
-                    if (selectedOption.value === quizAnswers[questionName]) {
-                        // Correct answer
+                    const optionElement = selectedOption.closest('.option');
+                    
+                    if (selectedOption.value === correctAnswers[questionName]) {
                         score++;
-                        feedbackElement.className = 'feedback correct';
-                        feedbackElement.innerHTML = '<strong>Correct!</strong> ' + quizExplanations[questionName];
+                        optionElement.classList.add('correct');
+                        document.getElementById(`feedback-${questionName}-correct`).style.display = 'block';
                     } else {
-                        // Incorrect answer
-                        feedbackElement.className = 'feedback incorrect';
-                        feedbackElement.innerHTML = '<strong>Incorrect.</strong> ' + quizExplanations[questionName];
+                        optionElement.classList.add('incorrect');
+                        document.getElementById(`feedback-${questionName}-incorrect`).style.display = 'block';
+                        // Show correct answer
+                        const correctOption = document.querySelector(`input[name="${questionName}"][value="${correctAnswers[questionName]}"]`).closest('.option');
+                        correctOption.classList.add('correct');
                     }
-                    feedbackElement.style.display = 'block';
                 }
             }
             
-            // Calculate percentage
-            const percentage = Math.round((score / totalQuestions) * 100);
-            
-            // Show result
-            const resultElement = document.getElementById('quiz-result');
-            if (percentage >= 70) {
-                resultElement.className = 'quiz-result quiz-passed';
-                resultElement.innerHTML = `
-                    <h3>Quiz Passed!</h3>
-                    <div class="result-score">${percentage}%</div>
-                    <div class="result-message">You scored ${score} out of ${totalQuestions}.</div>
-                    <p>Well done! You've demonstrated good understanding of phishing awareness concepts.</p>
-                `;
+            // Display results
+            document.getElementById('score-display').textContent = `${score}/5`;
+            let message = '';
+            if (score === 5) {
+                message = 'Excellent! You have a strong understanding of phishing awareness best practices.';
+            } else if (score >= 3) {
+                message = 'Good job! Review the incorrect answers to improve your knowledge.';
             } else {
-                resultElement.className = 'quiz-result quiz-failed';
-                resultElement.innerHTML = `
-                    <h3>Quiz Not Passed</h3>
-                    <div class="result-score">${percentage}%</div>
-                    <div class="result-message">You scored ${score} out of ${totalQuestions}.</div>
-                    <p>Consider reviewing the previous tasks before attempting the quiz again.</p>
-                `;
+                message = 'Consider reviewing the training materials before trying again.';
             }
-            resultElement.style.display = 'block';
+            document.getElementById('score-message').textContent = message;
+            document.getElementById('quiz-results').style.display = 'block';
+            document.getElementById('submit-quiz').style.display = 'none';
             
             // Scroll to results
-            resultElement.scrollIntoView({ behavior: 'smooth' });
+            document.getElementById('quiz-results').scrollIntoView({ behavior: 'smooth' });
+        });
+        
+        // Retake quiz functionality
+        document.getElementById('retake-button').addEventListener('click', function() {
+            // Reset quiz
+            document.querySelectorAll('.option').forEach(option => {
+                option.classList.remove('correct', 'incorrect', 'selected');
+            });
+            
+            document.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.checked = false;
+            });
+            
+            document.querySelectorAll('.feedback').forEach(feedback => {
+                feedback.style.display = 'none';
+            });
+            
+            document.getElementById('quiz-results').style.display = 'none';
+            document.getElementById('submit-quiz').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+        
+        // Option selection styling
+        document.querySelectorAll('.option input').forEach(input => {
+            input.addEventListener('change', function() {
+                document.querySelectorAll(`input[name="${this.name}"]`).forEach(radio => {
+                    radio.closest('.option').classList.remove('selected');
+                });
+                this.closest('.option').classList.add('selected');
+            });
         });
         
         // Enable complete button when checkbox is checked
@@ -563,11 +644,14 @@
         
         // Handle completion
         completeButton.addEventListener('click', function() {
-            // In a real application, you would save this completion status to a database
-            alert('Congratulations! You have completed the Phishing Awareness training module.');
-            
-            // Optionally redirect to the dashboard
+            alert('Phishing Awareness module completed successfully!');
+            // In a real application, you would mark the module complete in the database
             // window.location.href = 'dashboard.html';
+        });
+        
+        // Continue button functionality
+        document.getElementById('continue-button').addEventListener('click', function() {
+            document.getElementById('completion-section').scrollIntoView({ behavior: 'smooth' });
         });
     </script>
 </body>
