@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Ninjas - Task 5: Phishing Quiz</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        .sidebar {
+            width: 250px;
+            background-color: #1a2b3c;
+            color: white;
+            padding: 30px 20px;
+            height: 100vh;
+            position: fixed;
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .logo h1 {
+            font-size: 28px;
+            font-weight: bold;
+            line-height: 1;
+        }
+        
+        .logo h1:first-child {
+            color: #4fc3f7;
+        }
+        
+        .logo h1:last-child {
+            color: white;
+        }
+        
+        .nav-section {
+            margin-bottom: 30px;
+        }
+        
+        .nav-section h3 {
+            color: #4fc3f7;
+            margin-bottom: 15px;
+            font-size: 16px;
+            text-transform: uppercase;
+        }
+        
+        .nav-links a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 10px 0;
+            margin-bottom: 5px;
+            transition: all 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #4fc3f7;
+            transform: translateX(5px);
+        }
+        
+        .main-content {
+            margin-left: 250px;
+            padding: 40px;
+            width: calc(100% - 250px);
+        }
+        
+        .module-header {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .module-header h1 {
+            color: #1a2b3c;
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+        
+        .module-header p {
+            color: #666;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        
+        .task-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .task-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .task-number {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: #4fc3f7;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            margin-right: 15px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .task-title {
+            color: #1a2b3c;
+            font-size: 28px;
+        }
+        
+        .quiz-intro {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+        
+        .quiz-container {
+            margin: 20px 0;
+        }
+        
+        .question {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .question:last-child {
+            border-bottom: none;
+        }
+        
+        .question-text {
+            color: #1a2b3c;
+            font-size: 18px;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        
+        .options {
+            margin-left: 20px;
+        }
+        
+        .option {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .option input {
+            margin-right: 10px;
+        }
+        
+        .option label {
+            color: #666;
+            cursor: pointer;
+        }
+        
+        .feedback {
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 4px;
+            display: none;
+        }
+        
+        .correct {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            border-left: 4px solid #4caf50;
+        }
+        
+        .incorrect {
+            background-color: #ffebee;
+            color: #c62828;
+            border-left: 4px solid #f44336;
+        }
+        
+        .quiz-result {
+            text-align: center;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .quiz-passed {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            border: 2px solid #4caf50;
+        }
+        
+        .quiz-failed {
+            background-color: #ffebee;
+            color: #c62828;
+            border: 2px solid #f44336;
+        }
+        
+        .result-score {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .result-message {
+            margin-bottom: 15px;
+        }
+        
+        .completion-section {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .completion-title {
+            color: #1a2b3c;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        
+        .completion-message {
+            color: #666;
+            margin-bottom: 25px;
+            font-size: 16px;
+        }
+        
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+        }
+        
+        .checkbox-label {
+            color: #1a2b3c;
+            font-size: 18px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+        
+        .complete-button {
+            background-color: #4fc3f7;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .complete-button:hover {
+            background-color: #3ba7d3;
+        }
+        
+        .complete-button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        
+        .submit-quiz {
+            background-color: #1a2b3c;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 20px 0;
+            transition: background-color 0.3s;
+        }
+        
+        .submit-quiz:hover {
+            background-color: #2c3e50;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <h1>CYBER</h1>
+            <h1>NINJAS</h1>
+        </div>
+        
+        <div class="nav-section">
+            <h3>Menu</h3>
+            <div class="nav-links">
+                <a href="dashboard.html">DASHBOARD</a>
+                <a href="#">LEARN</a>
+                <a href="#">OTHERS</a>
+            </div>
+        </div>
+        
+        <div class="nav-section">
+            <h3>Quick Links</h3>
+            <div class="nav-links">
+                <a href="#">SEARCH</a>
+                <a href="#">NOTIFICATION</a>
+                <a href="#">PROFILE</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="main-content">
+        <div class="module-header">
+            <h1>PHISHING AWARENESS</h1>
+            <p>TEST YOUR KNOWLEDGE WITH THIS PHISHING AWARENESS QUIZ</p>
+        </div>
+        
+        <div class="task-container">
+            <div class="task-header">
+                <div class="task-number">5</div>
+                <h2 class="task-title">TASK 5: PHISHING QUIZ</h2>
+            </div>
+            
+            <div class="quiz-intro">
+                <p>This quiz will test your understanding of phishing concepts covered in the previous tasks. Answer all questions to complete the module. You'll receive immediate feedback on each question and your overall score at the end.</p>
+            </div>
+            
+            <div class="quiz-container" id="quiz">
+                <!-- Question 1 -->
+                <div class="question">
+                    <div class="question-text">1. What is the most common characteristic of a phishing email?</div>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" name="q1" id="q1a" value="a">
+                            <label for="q1a">It contains spelling and grammar mistakes</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="q1" id="q1b" value="b">
+                            <label for="q1b">It creates a sense of urgency</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="q1" id="q1c" value="c">
+                            <label for="q1c">It comes from an unknown sender</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="q1" id="q1d" value="d">
+                            <label for="q1d">It includes attachments</label>
+                        </div>
+                    </div>
+                    <div class="feedback" id="feedback-q1"></div>
+                </div>
+                
+                <!-- Question 2 -->
+                <div class="question">
+                    <div class="question-text">2. Which of these is an example of domain spoofing?</div>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" name="q2" id="q2a" value="a">
+                            <label for="q2a">microsoft-security-alert.com</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="q2" id="q2b" value="b">
+                            <label for="q2b">security.microsoft.com</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="q2" id="q2c" value="c">
+                            <label for="q2c">microsoft.com/security</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="q2" id="q2d" value="d">
+                            <label for="q2d">login.microsoftonline.com</label>
+                        </div>
+                    </div>
+                    <div class="feedback" id="feedback-q2"></div>
+                </div>
+                
+                <!-- Question 3 -->
+                <div class="question">
+                    <div class="question-text">3. What should you do if you receive a suspicious email that appears to be from your bank?</div>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" name="q3" id="q3a" value="a">
+                            <label for="q3a">Click on links to verify the website</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="q3" id="q3b" value="b">
+                            <label for="q3b">Reply to the email asking for verification</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="q3" id="q3c" value="c">
+                            <label for="q3c">Contact your bank using a known phone number</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="q3" id="q3d" value="d">
+                            <label for="q3d">Forward it to coworkers to warn them</label>
+                        </div>
+                    </div>
+                    <div class="feedback" id="feedback-q3"></div>
+                </div>
+                
+                <!-- Question 4 -->
+                <div class="question">
+                    <div class="question-text">4. Which of these is NOT a recommended phishing prevention technique?</div>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" name="q4" id="q4a" value="a">
+                            <label for="q4a">Using multi-factor authentication</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="q4" id="q4b" value="b">
+                            <label for="q4b">Hovering over links before clicking</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="q4" id="q4c" value="c">
+                            <label for="q4c">Using the same password for multiple accounts</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="q4" id="q4d" value="d">
+                            <label for="q4d">Keeping software updated</label>
+                        </div>
+                    </div>
+                    <div class="feedback" id="feedback-q4"></div>
+                </div>
+                
+                <!-- Question 5 -->
+                <div class="question">
+                    <div class="question-text">5. What is "whaling" in cybersecurity terms?</div>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" name="q5" id="q5a" value="a">
+                            <label for="q5a">A type of malware that encrypts files</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="q5" id="q5b" value="b">
+                            <label for="q5b">Phishing attacks targeting high-level executives</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="q5" id="q5c" value="c">
+                            <label for="q5c">A security protocol for email encryption</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="q5" id="q5d" value="d">
+                            <label for="q5d">A type of denial-of-service attack</label>
+                        </div>
+                    </div>
+                    <div class="feedback" id="feedback-q5"></div>
+                </div>
+                
+                <button class="submit-quiz" id="submit-quiz">Submit Quiz</button>
+                <div class="quiz-result" id="quiz-result"></div>
+            </div>
+        </div>
+        
+        <div class="completion-section">
+            <h3 class="completion-title">Task Completion</h3>
+            <p class="completion-message">Please confirm you have completed the quiz to mark this task as complete.</p>
+            
+            <div class="checkbox-container">
+                <input type="checkbox" id="completion-checkbox">
+                <label for="completion-checkbox" class="checkbox-label">I confirm I have completed this task</label>
+            </div>
+            
+            <button id="complete-button" class="complete-button" disabled>Mark as Complete</button>
+        </div>
+    </div>
+
+    <script>
+        // Quiz answers
+        const quizAnswers = {
+            q1: "b",
+            q2: "a",
+            q3: "c",
+            q4: "c",
+            q5: "b"
+        };
+        
+        // Quiz explanations
+        const quizExplanations = {
+            q1: "While phishing emails often contain spelling mistakes and come from unknown senders, the most common characteristic is creating a sense of urgency to prompt immediate action.",
+            q2: "'microsoft-security-alert.com' is an example of domain spoofing, trying to appear related to Microsoft while being a completely separate domain.",
+            q3: "You should always contact the organization directly using a known, trusted phone number or website (not from the email).",
+            q4: "Using the same password for multiple accounts is dangerous because if one account is compromised, all accounts become vulnerable.",
+            q5: "Whaling refers to highly targeted phishing attacks aimed at senior executives or high-profile individuals."
+        };
+        
+        // Submit quiz handler
+        document.getElementById('submit-quiz').addEventListener('click', function() {
+            let score = 0;
+            const totalQuestions = Object.keys(quizAnswers).length;
+            
+            // Check each question
+            for (let i = 1; i <= totalQuestions; i++) {
+                const questionName = 'q' + i;
+                const selectedOption = document.querySelector(`input[name="${questionName}"]:checked`);
+                const feedbackElement = document.getElementById(`feedback-${questionName}`);
+                
+                if (selectedOption) {
+                    if (selectedOption.value === quizAnswers[questionName]) {
+                        // Correct answer
+                        score++;
+                        feedbackElement.className = 'feedback correct';
+                        feedbackElement.innerHTML = '<strong>Correct!</strong> ' + quizExplanations[questionName];
+                    } else {
+                        // Incorrect answer
+                        feedbackElement.className = 'feedback incorrect';
+                        feedbackElement.innerHTML = '<strong>Incorrect.</strong> ' + quizExplanations[questionName];
+                    }
+                    feedbackElement.style.display = 'block';
+                }
+            }
+            
+            // Calculate percentage
+            const percentage = Math.round((score / totalQuestions) * 100);
+            
+            // Show result
+            const resultElement = document.getElementById('quiz-result');
+            if (percentage >= 70) {
+                resultElement.className = 'quiz-result quiz-passed';
+                resultElement.innerHTML = `
+                    <h3>Quiz Passed!</h3>
+                    <div class="result-score">${percentage}%</div>
+                    <div class="result-message">You scored ${score} out of ${totalQuestions}.</div>
+                    <p>Well done! You've demonstrated good understanding of phishing awareness concepts.</p>
+                `;
+            } else {
+                resultElement.className = 'quiz-result quiz-failed';
+                resultElement.innerHTML = `
+                    <h3>Quiz Not Passed</h3>
+                    <div class="result-score">${percentage}%</div>
+                    <div class="result-message">You scored ${score} out of ${totalQuestions}.</div>
+                    <p>Consider reviewing the previous tasks before attempting the quiz again.</p>
+                `;
+            }
+            resultElement.style.display = 'block';
+            
+            // Scroll to results
+            resultElement.scrollIntoView({ behavior: 'smooth' });
+        });
+        
+        // Enable complete button when checkbox is checked
+        const checkbox = document.getElementById('completion-checkbox');
+        const completeButton = document.getElementById('complete-button');
+        
+        checkbox.addEventListener('change', function() {
+            completeButton.disabled = !this.checked;
+        });
+        
+        // Handle completion
+        completeButton.addEventListener('click', function() {
+            // In a real application, you would save this completion status to a database
+            alert('Congratulations! You have completed the Phishing Awareness training module.');
+            
+            // Optionally redirect to the dashboard
+            // window.location.href = 'dashboard.html';
+        });
+    </script>
+</body>
+</html>
