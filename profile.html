@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Ninjas - Profile</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        .sidebar {
+            width: 250px;
+            background-color: #1a2b3c;
+            color: white;
+            padding: 30px 20px;
+            height: 100vh;
+            position: fixed;
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .logo h1 {
+            font-size: 28px;
+            font-weight: bold;
+            line-height: 1;
+        }
+        
+        .logo h1:first-child {
+            color: #4fc3f7;
+        }
+        
+        .logo h1:last-child {
+            color: white;
+        }
+        
+        .nav-section {
+            margin-bottom: 30px;
+        }
+        
+        .nav-section h3 {
+            color: #4fc3f7;
+            margin-bottom: 15px;
+            font-size: 16px;
+            text-transform: uppercase;
+        }
+        
+        .nav-links a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 10px 0;
+            margin-bottom: 5px;
+            transition: all 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #4fc3f7;
+            transform: translateX(5px);
+        }
+        
+        .main-content {
+            margin-left: 250px;
+            padding: 40px;
+            width: calc(100% - 250px);
+        }
+        
+        .profile-card {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .profile-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .profile-pic {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: #4fc3f7;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: bold;
+            margin-right: 20px;
+        }
+        
+        .profile-info h1 {
+            color: #1a2b3c;
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        
+        .profile-info p {
+            color: #666;
+            font-size: 16px;
+        }
+        
+        .profile-details {
+            margin-top: 20px;
+        }
+        
+        .detail-row {
+            display: flex;
+            padding: 15px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .detail-label {
+            width: 150px;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .detail-value {
+            color: #1a2b3c;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <h1>CYBER</h1>
+            <h1>NINJAS</h1>
+        </div>
+        
+        <div class="nav-section">
+            <h3>Menu</h3>
+            <div class="nav-links">
+                <a href="dashboard.html">DASHBOARD</a>
+                <a href="learningpath.html">LEARN</a>
+            </div>
+        </div>
+        
+        <div class="nav-section">
+            <h3>Quick Links</h3>
+            <div class="nav-links">
+                <a href="search.html">SEARCH</a>
+                <a href="profile.html">PROFILE</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="main-content">
+        <div class="profile-card">
+            <div class="profile-header">
+                <div class="profile-pic">JD</div>
+                <div class="profile-info">
+                    <h1>John Doe</h1>
+                    <p>Security Analyst</p>
+                </div>
+            </div>
+            
+            <div class="profile-details">
+                <div class="detail-row">
+                    <div class="detail-label">Employee ID</div>
+                    <div class="detail-value">CN-2023-0456</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Email</div>
+                    <div class="detail-value">john.doe@cyberninjas.com</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Department</div>
+                    <div class="detail-value">Security Operations</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Join Date</div>
+                    <div class="detail-value">March 15, 2023</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Last Login</div>
+                    <div class="detail-value">Today, 10:45 AM</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

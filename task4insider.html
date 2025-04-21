@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Ninjas - Insider Threats: Prevention Best Practices</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        .sidebar {
+            width: 250px;
+            background-color: #1a2b3c;
+            color: white;
+            padding: 30px 20px;
+            height: 100vh;
+            position: fixed;
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .logo h1 {
+            font-size: 28px;
+            font-weight: bold;
+            line-height: 1;
+        }
+        
+        .logo h1:first-child {
+            color: #4fc3f7;
+        }
+        
+        .logo h1:last-child {
+            color: white;
+        }
+        
+        .nav-section {
+            margin-bottom: 30px;
+        }
+        
+        .nav-section h3 {
+            color: #4fc3f7;
+            margin-bottom: 15px;
+            font-size: 16px;
+            text-transform: uppercase;
+        }
+        
+        .nav-links a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 10px 0;
+            margin-bottom: 5px;
+            transition: all 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #4fc3f7;
+            transform: translateX(5px);
+        }
+        
+        .main-content {
+            margin-left: 250px;
+            padding: 40px;
+            width: calc(100% - 250px);
+        }
+        
+        .module-header {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .module-header h1 {
+            color: #1a2b3c;
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+        
+        .module-header p {
+            color: #666;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        
+        .task-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .task-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .task-number {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: #4fc3f7;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            margin-right: 15px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .task-title {
+            color: #1a2b3c;
+            font-size: 28px;
+        }
+        
+        /* NEW INTERACTIVE DEFENSE BUILDER */
+        .defense-builder {
+            display: flex;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .controls-panel {
+            width: 35%;
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px dashed #1a2b3c;
+        }
+        
+        .defense-display {
+            width: 65%;
+            background-color: #e3f2fd;
+            padding: 20px;
+            border-radius: 8px;
+            min-height: 400px;
+            position: relative;
+        }
+        
+        .control-category {
+            margin-bottom: 25px;
+        }
+        
+        .control-category h3 {
+            color: #1a2b3c;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #4fc3f7;
+        }
+        
+        .control-item {
+            background-color: white;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 6px;
+            cursor: grab;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: all 0.2s;
+        }
+        
+        .control-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .control-item.dragging {
+            opacity: 0.5;
+        }
+        
+        .defense-layer {
+            margin-bottom: 30px;
+        }
+        
+        .layer-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .layer-number {
+            width: 30px;
+            height: 30px;
+            background-color: #1a2b3c;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        
+        .layer-title {
+            font-weight: bold;
+            color: #1a2b3c;
+        }
+        
+        .layer-content {
+            background-color: white;
+            padding: 15px;
+            border-radius: 6px;
+            min-height: 80px;
+            border: 1px dashed #4fc3f7;
+        }
+        
+        .dropped-control {
+            background-color: #f1f8e9;
+            padding: 10px;
+            margin-bottom: 8px;
+            border-radius: 4px;
+            border-left: 4px solid #4caf50;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .remove-control {
+            color: #c62828;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        .effectiveness-meter {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #1a2b3c;
+            border-radius: 8px;
+            color: white;
+            text-align: center;
+        }
+        
+        .meter-visual {
+            height: 20px;
+            background: linear-gradient(to right, #f44336, #ff9800, #4caf50);
+            border-radius: 10px;
+            margin: 10px 0;
+            position: relative;
+        }
+        
+        .meter-indicator {
+            position: absolute;
+            width: 4px;
+            height: 30px;
+            background-color: white;
+            top: -5px;
+            left: 10%;
+            transform: translateX(-50%);
+            transition: left 0.5s ease;
+        }
+        
+        .meter-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+        }
+        
+        .completion-section {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .completion-title {
+            color: #1a2b3c;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        
+        .completion-message {
+            color: #666;
+            margin-bottom: 25px;
+            font-size: 16px;
+        }
+        
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+        }
+        
+        .checkbox-label {
+            color: #1a2b3c;
+            font-size: 18px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+        
+        .complete-button {
+            background-color: #4fc3f7;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .complete-button:hover {
+            background-color: #3ba7d3;
+        }
+        
+        .complete-button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <h1>CYBER</h1>
+            <h1>NINJAS</h1>
+        </div>
+        
+        <div class="nav-section">
+            <h3>Menu</h3>
+            <div class="nav-links">
+                <a href="dashboard.html">DASHBOARD</a>
+                <a href="learningpath.html">LEARN</a>
+            </div>
+        </div>
+        
+        <div class="nav-section">
+            <h3>Quick Links</h3>
+            <div class="nav-links">
+                <a href="search.html">SEARCH</a>
+                <a href="profile.html">PROFILE</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="main-content">
+        <div class="module-header">
+            <h1>INSIDER THREATS</h1>
+            <p>BUILD A MULTI-LAYERED DEFENSE SYSTEM TO PROTECT AGAINST INSIDER THREATS. DRAG AND DROP CONTROLS TO CREATE YOUR SECURITY STRATEGY.</p>
+        </div>
+        
+        <div class="task-container">
+            <div class="task-header">
+                <div class="task-number">4</div>
+                <h2 class="task-title">PREVENTION BEST PRACTICES</h2>
+            </div>
+            
+            <div class="task-content">
+                <p>Effective insider threat programs use multiple layers of defense. Build your strategy by selecting controls from each category:</p>
+                
+                <div class="defense-builder">
+                    <div class="controls-panel" id="controls-panel">
+                        <div class="control-category">
+                            <h3>Access Controls</h3>
+                            <div class="control-item" draggable="true" data-category="access">
+                                Principle of Least Privilege
+                            </div>
+                            <div class="control-item" draggable="true" data-category="access">
+                                Role-Based Access Control
+                            </div>
+                            <div class="control-item" draggable="true" data-category="access">
+                                Regular Access Reviews
+                            </div>
+                            <div class="control-item" draggable="true" data-category="access">
+                                Multi-Factor Authentication
+                            </div>
+                        </div>
+                        
+                        <div class="control-category">
+                            <h3>Monitoring</h3>
+                            <div class="control-item" draggable="true" data-category="monitoring">
+                                User Behavior Analytics
+                            </div>
+                            <div class="control-item" draggable="true" data-category="monitoring">
+                                Data Loss Prevention
+                            </div>
+                            <div class="control-item" draggable="true" data-category="monitoring">
+                                Privileged Session Monitoring
+                            </div>
+                            <div class="control-item" draggable="true" data-category="monitoring">
+                                Abnormal Activity Alerts
+                            </div>
+                        </div>
+                        
+                        <div class="control-category">
+                            <h3>Policies & Training</h3>
+                            <div class="control-item" draggable="true" data-category="policies">
+                                Clear Acceptable Use Policy
+                            </div>
+                            <div class="control-item" draggable="true" data-category="policies">
+                                Regular Security Training
+                            </div>
+                            <div class="control-item" draggable="true" data-category="policies">
+                                Exit Interviews
+                            </div>
+                            <div class="control-item" draggable="true" data-category="policies">
+                                Anonymous Reporting Channel
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="defense-display" id="defense-display">
+                        <div class="defense-layer">
+                            <div class="layer-header">
+                                <div class="layer-number">1</div>
+                                <div class="layer-title">Preventative Controls</div>
+                            </div>
+                            <div class="layer-content" id="prevent-layer" ondrop="drop(event)" ondragover="allowDrop(event)">
+                                <!-- Dropped items will appear here -->
+                            </div>
+                        </div>
+                        
+                        <div class="defense-layer">
+                            <div class="layer-header">
+                                <div class="layer-number">2</div>
+                                <div class="layer-title">Detective Controls</div>
+                            </div>
+                            <div class="layer-content" id="detect-layer" ondrop="drop(event)" ondragover="allowDrop(event)">
+                                <!-- Dropped items will appear here -->
+                            </div>
+                        </div>
+                        
+                        <div class="defense-layer">
+                            <div class="layer-header">
+                                <div class="layer-number">3</div>
+                                <div class="layer-title">Response Controls</div>
+                            </div>
+                            <div class="layer-content" id="respond-layer" ondrop="drop(event)" ondragover="allowDrop(event)">
+                                <!-- Dropped items will appear here -->
+                            </div>
+                        </div>
+                        
+                        <div class="effectiveness-meter">
+                            <h3>Defense Effectiveness</h3>
+                            <div class="meter-visual">
+                                <div class="meter-indicator" id="meter-indicator"></div>
+                            </div>
+                            <div class="meter-labels">
+                                <span>Weak</span>
+                                <span>Moderate</span>
+                                <span>Strong</span>
+                            </div>
+                            <p id="effectiveness-text">Add controls to strengthen your defenses</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 30px; padding: 20px; background-color: #fff8e1; border-radius: 8px;">
+                    <h3 style="color: #1a2b3c; margin-bottom: 10px;">Pro Tip</h3>
+                    <p style="color: #666;">A balanced defense uses controls from all three layers. Try to include at least:</p>
+                    <ul style="margin: 10px 0; padding-left: 20px; color: #666;">
+                        <li>2 Preventative controls (like access restrictions)</li>
+                        <li>2 Detective controls (like monitoring solutions)</li>
+                        <li>1 Response control (like incident response planning)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="completion-section">
+            <h3 class="completion-title">Task Completion</h3>
+            <p class="completion-message">Please confirm you have built a defense strategy and understand the controls to mark this task as complete.</p>
+            
+            <div class="checkbox-container">
+                <input type="checkbox" id="completion-checkbox">
+                <label for="completion-checkbox" class="checkbox-label">I confirm I have completed this task</label>
+            </div>
+            
+            <button id="complete-button" class="complete-button" disabled>Mark as Complete</button>
+        </div>
+    </div>
+
+    <script>
+        // Drag and Drop Functionality
+        let draggedItem = null;
+        
+        document.querySelectorAll('.control-item').forEach(item => {
+            item.addEventListener('dragstart', function(e) {
+                draggedItem = this;
+                setTimeout(() => {
+                    this.classList.add('dragging');
+                }, 0);
+            });
+            
+            item.addEventListener('dragend', function() {
+                this.classList.remove('dragging');
+            });
+        });
+        
+        function allowDrop(e) {
+            e.preventDefault();
+        }
+        
+        function drop(e) {
+            e.preventDefault();
+            if (draggedItem) {
+                const newItem = draggedItem.cloneNode(true);
+                newItem.classList.remove('dragging');
+                newItem.setAttribute('draggable', 'false');
+                
+                // Add remove button
+                const removeBtn = document.createElement('span');
+                removeBtn.className = 'remove-control';
+                removeBtn.innerHTML = '×';
+                removeBtn.addEventListener('click', function() {
+                    this.parentElement.remove();
+                    updateEffectiveness();
+                });
+                newItem.appendChild(removeBtn);
+                
+                e.target.appendChild(newItem);
+                updateEffectiveness();
+            }
+        }
+        
+        // Effectiveness Calculator
+        function updateEffectiveness() {
+            const preventCount = document.getElementById('prevent-layer').children.length;
+            const detectCount = document.getElementById('detect-layer').children.length;
+            const respondCount = document.getElementById('respond-layer').children.length;
+            
+            const totalControls = preventCount + detectCount + respondCount;
+            let effectiveness = 0;
+            let effectivenessText = '';
+            
+            if (totalControls === 0) {
+                effectiveness = 10;
+                effectivenessText = 'Add controls to strengthen your defenses';
+            } else if (totalControls < 3) {
+                effectiveness = 30;
+                effectivenessText = 'Basic defenses - needs more controls';
+            } else if (totalControls < 5) {
+                effectiveness = 60;
+                effectivenessText = 'Moderate protection - good start';
+            } else if (totalControls < 8) {
+                effectiveness = 80;
+                effectivenessText = 'Strong multi-layered defense';
+            } else {
+                effectiveness = 95;
+                effectivenessText = 'Excellent comprehensive protection!';
+            }
+            
+            // Balance bonus
+            if (preventCount > 1 && detectCount > 1 && respondCount > 0) {
+                effectiveness = Math.min(100, effectiveness + 15);
+                effectivenessText += ' (Well balanced!)';
+            }
+            
+            document.getElementById('meter-indicator').style.left = `${effectiveness}%`;
+            document.getElementById('effectiveness-text').textContent = effectivenessText;
+        }
+        
+        // Enable complete button when checkbox is checked
+        const checkbox = document.getElementById('completion-checkbox');
+        const completeButton = document.getElementById('complete-button');
+        
+        checkbox.addEventListener('change', function() {
+            completeButton.disabled = !this.checked;
+        });
+        
+        // Handle completion
+        completeButton.addEventListener('click', function() {
+            alert('Task 4 marked as complete! You can now proceed to Task 5.');
+            // window.location.href = 'task5insider.html';
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Ninjas - Task 1: Password Security</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        .sidebar {
+            width: 250px;
+            background-color: #1a2b3c;
+            color: white;
+            padding: 30px 20px;
+            height: 100vh;
+            position: fixed;
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .logo h1 {
+            font-size: 28px;
+            font-weight: bold;
+            line-height: 1;
+        }
+        
+        .logo h1:first-child {
+            color: #4fc3f7;
+        }
+        
+        .logo h1:last-child {
+            color: white;
+        }
+        
+        .nav-section {
+            margin-bottom: 30px;
+        }
+        
+        .nav-section h3 {
+            color: #4fc3f7;
+            margin-bottom: 15px;
+            font-size: 16px;
+            text-transform: uppercase;
+        }
+        
+        .nav-links a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 10px 0;
+            margin-bottom: 5px;
+            transition: all 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #4fc3f7;
+            transform: translateX(5px);
+        }
+        
+        .main-content {
+            margin-left: 250px;
+            padding: 40px;
+            width: calc(100% - 250px);
+        }
+        
+        .module-header {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .module-header h1 {
+            color: #1a2b3c;
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+        
+        .module-header p {
+            color: #666;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        
+        .task-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .task-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .task-number {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: #4fc3f7;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            margin-right: 15px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .task-title {
+            color: #1a2b3c;
+            font-size: 28px;
+        }
+        
+        .task-content {
+            padding: 20px 0;
+        }
+        
+        .task-content p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+        
+        .completion-section {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .completion-title {
+            color: #1a2b3c;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        
+        .completion-message {
+            color: #666;
+            margin-bottom: 25px;
+            font-size: 16px;
+        }
+        
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+        }
+        
+        .checkbox-label {
+            color: #1a2b3c;
+            font-size: 18px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+        
+        .complete-button {
+            background-color: #4fc3f7;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .complete-button:hover {
+            background-color: #3ba7d3;
+        }
+        
+        .complete-button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        
+        /* Password strength meter styles */
+        .password-meter {
+            margin: 20px 0;
+        }
+        
+        .strength-levels {
+            display: flex;
+            margin-bottom: 10px;
+        }
+        
+        .strength-level {
+            height: 5px;
+            flex-grow: 1;
+            margin-right: 5px;
+            background-color: #eee;
+        }
+        
+        .strength-level:last-child {
+            margin-right: 0;
+        }
+        
+        .strength-labels {
+            display: flex;
+            justify-content: space-between;
+            color: #666;
+            font-size: 12px;
+        }
+        
+        /* Interactive elements */
+        .interactive-demo {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .demo-title {
+            color: #1a2b3c;
+            margin-bottom: 15px;
+        }
+        
+        input[type="text"] {
+            padding: 10px;
+            width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        
+        .password-feedback {
+            color: #666;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <h1>CYBER</h1>
+            <h1>NINJAS</h1>
+        </div>
+        
+        <div class="nav-section">
+            <h3>Menu</h3>
+            <div class="nav-links">
+                <a href="dashboard.html">DASHBOARD</a>
+                <a href="learningpath.html">LEARN</a>
+            </div>
+        </div>
+        
+        <div class="nav-section">
+            <h3>Quick Links</h3>
+            <div class="nav-links">
+                <a href="search.html">SEARCH</a>
+                <a href="profile.html">PROFILE</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="main-content">
+        <div class="module-header">
+            <h1>SECURITY BEST PRACTICES</h1>
+            <p>Essential cybersecurity habits to protect yourself and your organization from digital threats.</p>
+        </div>
+        
+        <div class="task-container">
+            <div class="task-header">
+                <div class="task-number">1</div>
+                <h2 class="task-title">TASK 1: PASSWORD SECURITY</h2>
+            </div>
+            
+            <div class="task-content">
+                <p>Strong passwords are your first line of defense against cyber threats. A good password should be:</p>
+                <ul style="color: #666; line-height: 1.6; margin-bottom: 15px; padding-left: 20px;">
+                    <li><strong>Long</strong> (at least 12 characters)</li>
+                    <li><strong>Complex</strong> (mix of upper/lowercase letters, numbers, and symbols)</li>
+                    <li><strong>Unique</strong> (not reused across accounts)</li>
+                    <li><strong>Unpredictable</strong> (avoid personal information or common phrases)</li>
+                </ul>
+                
+                <div class="interactive-demo">
+                    <h3 class="demo-title">Password Strength Checker</h3>
+                    <input type="text" id="password-input" placeholder="Type a password to test its strength">
+                    <div class="password-meter">
+                        <div class="strength-levels">
+                            <div class="strength-level" id="level1"></div>
+                            <div class="strength-level" id="level2"></div>
+                            <div class="strength-level" id="level3"></div>
+                            <div class="strength-level" id="level4"></div>
+                        </div>
+                        <div class="strength-labels">
+                            <span>Weak</span>
+                            <span>Fair</span>
+                            <span>Good</span>
+                            <span>Strong</span>
+                        </div>
+                    </div>
+                    <div class="password-feedback" id="password-feedback"></div>
+                </div>
+                
+                <p><strong>Password Managers:</strong> Remembering complex passwords for every account is challenging. A password manager:</p>
+                <ul style="color: #666; line-height: 1.6; margin-bottom: 15px; padding-left: 20px;">
+                    <li>Generates and stores strong, unique passwords for all your accounts</li>
+                    <li>Auto-fills passwords when you need them</li>
+                    <li>Works across all your devices</li>
+                    <li>Protects your passwords with one master password</li>
+                </ul>
+                
+                <p><strong>Multi-Factor Authentication (MFA):</strong> Even with a strong password, adding MFA provides an extra layer of security by requiring:</p>
+                <ul style="color: #666; line-height: 1.6; margin-bottom: 15px; padding-left: 20px;">
+                    <li>Something you know (password)</li>
+                    <li>Something you have (phone, security key)</li>
+                    <li>Something you are (fingerprint, face ID)</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="completion-section">
+            <h3 class="completion-title">Task Completion</h3>
+            <p class="completion-message">Please confirm you have read and understood the material to mark this task as complete.</p>
+            
+            <div class="checkbox-container">
+                <input type="checkbox" id="completion-checkbox">
+                <label for="completion-checkbox" class="checkbox-label">I confirm I have completed this task</label>
+            </div>
+            
+            <button id="complete-button" class="complete-button" disabled>Mark as Complete</button>
+        </div>
+    </div>
+
+    <script>
+        // Enable complete button when checkbox is checked
+        const checkbox = document.getElementById('completion-checkbox');
+        const completeButton = document.getElementById('complete-button');
+        
+        checkbox.addEventListener('change', function() {
+            completeButton.disabled = !this.checked;
+        });
+        
+        // Handle completion
+        completeButton.addEventListener('click', function() {
+            alert('Task 1 marked as complete! You can now proceed to Task 2.');
+        });
+        
+        // Password strength checker
+        const passwordInput = document.getElementById('password-input');
+        const level1 = document.getElementById('level1');
+        const level2 = document.getElementById('level2');
+        const level3 = document.getElementById('level3');
+        const level4 = document.getElementById('level4');
+        const feedback = document.getElementById('password-feedback');
+        
+        passwordInput.addEventListener('input', function() {
+            const password = this.value;
+            let strength = 0;
+            
+            // Reset styles
+            [level1, level2, level3, level4].forEach(level => {
+                level.style.backgroundColor = '#eee';
+            });
+            
+            // Length check
+            if (password.length >= 12) strength++;
+            
+            // Complexity checks
+            if (/[A-Z]/.test(password)) strength++;
+            if (/[0-9]/.test(password)) strength++;
+            if (/[^A-Za-z0-9]/.test(password)) strength++;
+            
+            // Visual feedback
+            if (strength >= 1) {
+                level1.style.backgroundColor = '#ff6b6b';
+                feedback.textContent = 'Weak - Try adding more characters or complexity';
+            }
+            if (strength >= 3) {
+                level2.style.backgroundColor = '#ffd166';
+                feedback.textContent = 'Fair - Getting better!';
+            }
+            if (strength >= 5) {
+                level3.style.backgroundColor = '#06d6a0';
+                feedback.textContent = 'Good - Strong password!';
+            }
+            if (strength >= 7) {
+                level4.style.backgroundColor = '#118ab2';
+                feedback.textContent = 'Strong - Excellent password!';
+            }
+            
+            if (password.length === 0) {
+                feedback.textContent = '';
+            }
+        });
+    </script>
+</body>
+</html>

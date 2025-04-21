@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Ninjas - Task 2: Two-Factor Authentication</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        .sidebar {
+            width: 250px;
+            background-color: #1a2b3c;
+            color: white;
+            padding: 30px 20px;
+            height: 100vh;
+            position: fixed;
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .logo h1 {
+            font-size: 28px;
+            font-weight: bold;
+            line-height: 1;
+        }
+        
+        .logo h1:first-child {
+            color: #4fc3f7;
+        }
+        
+        .logo h1:last-child {
+            color: white;
+        }
+        
+        .nav-section {
+            margin-bottom: 30px;
+        }
+        
+        .nav-section h3 {
+            color: #4fc3f7;
+            margin-bottom: 15px;
+            font-size: 16px;
+            text-transform: uppercase;
+        }
+        
+        .nav-links a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 10px 0;
+            margin-bottom: 5px;
+            transition: all 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #4fc3f7;
+            transform: translateX(5px);
+        }
+        
+        .main-content {
+            margin-left: 250px;
+            padding: 40px;
+            width: calc(100% - 250px);
+        }
+        
+        .module-header {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .module-header h1 {
+            color: #1a2b3c;
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+        
+        .module-header p {
+            color: #666;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        
+        .task-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .task-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .task-number {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: #4fc3f7;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            margin-right: 15px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .task-title {
+            color: #1a2b3c;
+            font-size: 28px;
+        }
+        
+        .task-content {
+            padding: 20px 0;
+        }
+        
+        .task-content p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+        
+        .methods-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+        
+        .method-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            background-color: #f9f9f9;
+        }
+        
+        .method-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .method-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .method-icon {
+            width: 40px;
+            height: 40px;
+            margin-right: 15px;
+        }
+        
+        .method-name {
+            color: #1a2b3c;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .method-desc {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+        
+        .method-steps {
+            color: #444;
+            font-size: 14px;
+            padding-left: 20px;
+        }
+        
+        .method-steps li {
+            margin-bottom: 8px;
+        }
+        
+        .security-level {
+            display: flex;
+            align-items: center;
+            margin-top: 15px;
+            font-size: 13px;
+            color: #666;
+        }
+        
+        .security-bars {
+            display: flex;
+            margin-left: 10px;
+        }
+        
+        .security-bar {
+            width: 15px;
+            height: 5px;
+            margin-right: 3px;
+            background-color: #e0e0e0;
+        }
+        
+        .active-bar {
+            background-color: #4fc3f7;
+        }
+        
+        .setup-demo {
+            background-color: #f0f8ff;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 30px 0;
+        }
+        
+        .demo-title {
+            color: #1a2b3c;
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+        
+        .demo-steps {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .demo-step {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .step-number {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background-color: #4fc3f7;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        
+        .step-content {
+            display: inline-block;
+            width: calc(100% - 40px);
+            vertical-align: top;
+        }
+        
+        .step-title {
+            color: #1a2b3c;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .step-desc {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .qr-placeholder {
+            width: 150px;
+            height: 150px;
+            background-color: #fff;
+            border: 2px dashed #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 15px auto;
+            color: #999;
+        }
+        
+        .completion-section {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .completion-title {
+            color: #1a2b3c;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        
+        .completion-message {
+            color: #666;
+            margin-bottom: 25px;
+            font-size: 16px;
+        }
+        
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+        }
+        
+        .checkbox-label {
+            color: #1a2b3c;
+            font-size: 18px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+        
+        .complete-button {
+            background-color: #4fc3f7;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .complete-button:hover {
+            background-color: #3ba7d3;
+        }
+        
+        .complete-button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <h1>CYBER</h1>
+            <h1>NINJAS</h1>
+        </div>
+        
+        <div class="nav-section">
+            <h3>Menu</h3>
+            <div class="nav-links">
+                <a href="dashboard.html">DASHBOARD</a>
+                <a href="learningpath.html">LEARN</a>
+            </div>
+        </div>
+        
+        <div class="nav-section">
+            <h3>Quick Links</h3>
+            <div class="nav-links">
+                <a href="search.html">SEARCH</a>
+                <a href="profile.html">PROFILE</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="main-content">
+        <div class="module-header">
+            <h1>SECURITY BEST PRACTICES</h1>
+            <p>Essential cybersecurity habits to protect yourself and your organization from digital threats.</p>
+        </div>
+        
+        <div class="task-container">
+            <div class="task-header">
+                <div class="task-number">2</div>
+                <h2 class="task-title">TASK 2: TWO-FACTOR AUTHENTICATION (2FA)</h2>
+            </div>
+            
+            <div class="task-content">
+                <p>Two-Factor Authentication adds an extra layer of security beyond just a password. Even if someone steals your password, they won't be able to access your account without the second factor.</p>
+                
+                <h3 style="color: #1a2b3c; margin: 25px 0 15px;">Why 2FA Matters:</h3>
+                <ul style="color: #666; line-height: 1.6; margin-bottom: 20px; padding-left: 20px;">
+                    <li>Prevents 99.9% of automated attacks</li>
+                    <li>Protects against password leaks and breaches</li>
+                    <li>Required for many compliance standards</li>
+                    <li>Simple to set up but extremely effective</li>
+                </ul>
+                
+                <div class="methods-grid">
+                    <!-- Authenticator App Card -->
+                    <div class="method-card">
+                        <div class="method-header">
+                            <svg class="method-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#1a2b3c">
+                                <path d="M17 1H7c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-2-2-2zm0 18H7V5h10v14zM12 6.72c-1.96 0-3.5 1.52-3.5 3.47h1.75c0-.93.82-1.75 1.75-1.75s1.75.82 1.75 1.75c0 1.75-2.63 1.57-2.63 4.45h1.76c0-1.96 2.62-2.19 2.62-4.45 0-1.96-1.54-3.47-3.5-3.47zM11 16h2v2h-2z"/>
+                            </svg>
+                            <span class="method-name">Authenticator Apps</span>
+                        </div>
+                        <p class="method-desc">Generate time-based one-time passwords (TOTP) on your smartphone:</p>
+                        <ul class="method-steps">
+                            <li>Works without cellular service</li>
+                            <li>More secure than SMS</li>
+                            <li>Supports multiple accounts</li>
+                        </ul>
+                        <div class="security-level">
+                            Security:
+                            <div class="security-bars">
+                                <div class="security-bar active-bar"></div>
+                                <div class="security-bar active-bar"></div>
+                                <div class="security-bar active-bar"></div>
+                                <div class="security-bar active-bar"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- SMS/Text Message Card -->
+                    <div class="method-card">
+                        <div class="method-header">
+                            <svg class="method-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#1a2b3c">
+                                <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
+                            </svg>
+                            <span class="method-name">SMS/Text Message</span>
+                        </div>
+                        <p class="method-desc">Receive one-time codes via text message:</p>
+                        <ul class="method-steps">
+                            <li>No app installation needed</li>
+                            <li>Vulnerable to SIM swapping</li>
+                            <li>Requires cellular service</li>
+                        </ul>
+                        <div class="security-level">
+                            Security:
+                            <div class="security-bars">
+                                <div class="security-bar active-bar"></div>
+                                <div class="security-bar active-bar"></div>
+                                <div class="security-bar"></div>
+                                <div class="security-bar"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Security Key Card -->
+                    <div class="method-card">
+                        <div class="method-header">
+                            <svg class="method-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#1a2b3c">
+                                <path d="M21 10h-8.35C11.83 7.67 9.61 6 7 6c-3.31 0-6 2.69-6 6s2.69 6 6 6c2.61 0 4.83-1.67 5.65-4H13l2 2 2-2 2 2 4-4.04L21 10zM7 15c-1.65 0-3-1.35-3-3s1.35-3 3-3 3 1.35 3 3-1.35 3-3 3z"/>
+                            </svg>
+                            <span class="method-name">Security Keys</span>
+                        </div>
+                        <p class="method-desc">Physical devices that provide the strongest authentication:</p>
+                        <ul class="method-steps">
+                            <li>Phishing-resistant</li>
+                            <li>Works even if phone is lost</li>
+                            <li>Supports multiple protocols</li>
+                        </ul>
+                        <div class="security-level">
+                            Security:
+                            <div class="security-bars">
+                                <div class="security-bar active-bar"></div>
+                                <div class="security-bar active-bar"></div>
+                                <div class="security-bar active-bar"></div>
+                                <div class="security-bar active-bar"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="setup-demo">
+                    <h3 class="demo-title">How to Set Up 2FA with Google Authenticator</h3>
+                    <div class="demo-steps">
+                        <div class="demo-step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <div class="step-title">Download the App</div>
+                                <div class="step-desc">Install Google Authenticator (or similar) from your app store</div>
+                            </div>
+                        </div>
+                        <div class="demo-step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <div class="step-title">Scan QR Code</div>
+                                <div class="step-desc">When prompted by a service, scan the QR code with the app</div>
+                                <div class="qr-placeholder">QR Code</div>
+                            </div>
+                        </div>
+                        <div class="demo-step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <div class="step-title">Enter Verification Code</div>
+                                <div class="step-desc">Type the 6-digit code from the app to verify setup</div>
+                            </div>
+                        </div>
+                        <div class="demo-step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <div class="step-title">Save Backup Codes</div>
+                                <div class="step-desc">Store recovery codes in a safe place in case you lose access</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3 style="color: #1a2b3c; margin: 30px 0 15px;">Where to Enable 2FA:</h3>
+                <ul style="color: #666; line-height: 1.6; margin-bottom: 15px; padding-left: 20px;">
+                    <li><strong>Email accounts</strong> (Gmail, Outlook, etc.)</li>
+                    <li><strong>Financial services</strong> (Banking, PayPal, etc.)</li>
+                    <li><strong>Social media</strong> (Facebook, Twitter, LinkedIn)</li>
+                    <li><strong>Cloud storage</strong> (Google Drive, Dropbox)</li>
+                    <li><strong>Work accounts</strong> (VPN, email, HR systems)</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="completion-section">
+            <h3 class="completion-title">Task Completion</h3>
+            <p class="completion-message">Please confirm you have read and understood the material to mark this task as complete.</p>
+            
+            <div class="checkbox-container">
+                <input type="checkbox" id="completion-checkbox">
+                <label for="completion-checkbox" class="checkbox-label">I confirm I have completed this task</label>
+            </div>
+            
+            <button id="complete-button" class="complete-button" disabled>Mark as Complete</button>
+        </div>
+    </div>
+
+    <script>
+        // Enable complete button when checkbox is checked
+        const checkbox = document.getElementById('completion-checkbox');
+        const completeButton = document.getElementById('complete-button');
+        
+        checkbox.addEventListener('change', function() {
+            completeButton.disabled = !this.checked;
+        });
+        
+        // Handle completion
+        completeButton.addEventListener('click', function() {
+            alert('Task 2 marked as complete! You can now proceed to Task 3.');
+            // window.location.href = 'task3security.html';
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Ninjas - Social Engineering: Attack Methods</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        .sidebar {
+            width: 250px;
+            background-color: #1a2b3c;
+            color: white;
+            padding: 30px 20px;
+            height: 100vh;
+            position: fixed;
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .logo h1 {
+            font-size: 28px;
+            font-weight: bold;
+            line-height: 1;
+        }
+        
+        .logo h1:first-child {
+            color: #4fc3f7;
+        }
+        
+        .logo h1:last-child {
+            color: white;
+        }
+        
+        .nav-section {
+            margin-bottom: 30px;
+        }
+        
+        .nav-section h3 {
+            color: #4fc3f7;
+            margin-bottom: 15px;
+            font-size: 16px;
+            text-transform: uppercase;
+        }
+        
+        .nav-links a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 10px 0;
+            margin-bottom: 5px;
+            transition: all 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #4fc3f7;
+            transform: translateX(5px);
+        }
+        
+        .main-content {
+            margin-left: 250px;
+            padding: 40px;
+            width: calc(100% - 250px);
+        }
+        
+        .module-header {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .module-header h1 {
+            color: #1a2b3c;
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+        
+        .module-header p {
+            color: #666;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        
+        .task-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .task-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .task-number {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: #4fc3f7;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            margin-right: 15px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .task-title {
+            color: #1a2b3c;
+            font-size: 28px;
+        }
+        
+        .task-content {
+            padding: 20px 0;
+        }
+        
+        .attack-method {
+            margin: 25px 0;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            border-left: 4px solid #4fc3f7;
+        }
+        
+        .attack-method h3 {
+            color: #1a2b3c;
+            font-size: 20px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .attack-method h3:before {
+            content: "⚠️";
+            margin-right: 10px;
+            font-size: 24px;
+        }
+        
+        .attack-method p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .example {
+            background-color: #fff8e1;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .example h4 {
+            color: #1a2b3c;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+        
+        .interactive-quiz {
+            background-color: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .interactive-quiz h3 {
+            color: #1a2b3c;
+            margin-bottom: 15px;
+        }
+        
+        .quiz-option {
+            background-color: white;
+            padding: 12px 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid #ddd;
+        }
+        
+        .quiz-option:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .feedback {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 5px;
+            display: none;
+        }
+        
+        .correct {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+        
+        .incorrect {
+            background-color: #ffebee;
+            color: #c62828;
+        }
+        
+        .completion-section {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .completion-title {
+            color: #1a2b3c;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        
+        .completion-message {
+            color: #666;
+            margin-bottom: 25px;
+            font-size: 16px;
+        }
+        
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+        }
+        
+        .checkbox-label {
+            color: #1a2b3c;
+            font-size: 18px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+        
+        .complete-button {
+            background-color: #4fc3f7;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .complete-button:hover {
+            background-color: #3ba7d3;
+        }
+        
+        .complete-button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <h1>CYBER</h1>
+            <h1>NINJAS</h1>
+        </div>
+        
+        <div class="nav-section">
+            <h3>Menu</h3>
+            <div class="nav-links">
+                <a href="dashboard.html">DASHBOARD</a>
+                <a href="learningpath.html">LEARN</a>
+            </div>
+        </div>
+        
+        <div class="nav-section">
+            <h3>Quick Links</h3>
+            <div class="nav-links">
+                <a href="search.html">SEARCH</a>
+                <a href="profile.html">PROFILE</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="main-content">
+        <div class="module-header">
+            <h1>SOCIAL ENGINEERING AWARENESS</h1>
+            <p>LEARN HOW ATTACKERS MANIPULATE PEOPLE INTO REVEALING SENSITIVE INFORMATION. THIS MODULE COVERS COMMON TRICKS AND DEFENSE STRATEGIES.</p>
+        </div>
+        
+        <div class="task-container">
+            <div class="task-header">
+                <div class="task-number">2</div>
+                <h2 class="task-title">COMMON ATTACK METHODS</h2>
+            </div>
+            
+            <div class="task-content">
+                <h3>The Attacker's Toolkit</h3>
+                <p>Social engineers use these proven methods to bypass security. Being able to identify them is your first line of defense.</p>
+                
+                <div class="attack-method">
+                    <h3>Phishing</h3>
+                    <p>Fraudulent emails/messages pretending to be from trusted sources to steal credentials or install malware.</p>
+                    
+                    <div class="example">
+                        <h4>Real Example:</h4>
+                        <p>"Urgent: Your Microsoft 365 account will be suspended in 24 hours! Click here to verify your identity."</p>
+                    </div>
+                    
+                    <p><strong>Red Flags:</strong> Generic greetings, mismatched sender addresses, urgent language</p>
+                </div>
+                
+                <div class="attack-method">
+                    <h3>Pretexting</h3>
+                    <p>Creating a fabricated scenario to establish trust and extract information.</p>
+                    
+                    <div class="example">
+                        <h4>Real Example:</h4>
+                        <p>"Hi, I'm from IT Support. We're seeing unusual activity on your workstation and need to verify your employee ID and password to investigate."</p>
+                    </div>
+                    
+                    <p><strong>Red Flags:</strong> Requests for sensitive info, pressure to bypass normal procedures</p>
+                </div>
+                
+                <div class="attack-method">
+                    <h3>Baiting</h3>
+                    <p>Offering something enticing (free software, gift cards) to deliver malware.</p>
+                    
+                    <div class="example">
+                        <h4>Real Example:</h4>
+                        <p>USB drives labeled "Q2 Salary Adjustments" left in the office parking lot.</p>
+                    </div>
+                    
+                    <p><strong>Red Flags:</strong> Too-good-to-be-true offers, unexpected physical media</p>
+                </div>
+                
+                <div class="attack-method">
+                    <h3>Tailgating/Piggybacking</h3>
+                    <p>Gaining physical access by following authorized personnel through secured doors.</p>
+                    
+                    <div class="example">
+                        <h4>Real Example:</h4>
+                        <p>"Could you hold the door? I forgot my badge at my desk." (while carrying boxes to appear legitimate)</p>
+                    </div>
+                    
+                    <p><strong>Red Flags:</strong> Requests to bypass security protocols, unfamiliar faces in secure areas</p>
+                </div>
+                
+                <div class="interactive-quiz">
+                    <h3>Spot the Attack</h3>
+                    <p>Test your ability to recognize social engineering attempts:</p>
+                    
+                    <h4>Which of these is a likely social engineering attempt?</h4>
+                    
+                    <div class="quiz-option" onclick="showFeedback(1, true)">
+                        An email from "HR@yourcompany.com" asking you to download and fill out a new W-2 form immediately
+                    </div>
+                    
+                    <div class="quiz-option" onclick="showFeedback(2, false)">
+                        A scheduled meeting invite from your manager about quarterly goals
+                    </div>
+                    
+                    <div class="quiz-option" onclick="showFeedback(3, false)">
+                        The IT department announcing a planned system maintenance window
+                    </div>
+                    
+                    <div class="feedback" id="feedback1">
+                        <strong>Correct!</strong> This shows multiple red flags: urgency ("immediately"), sensitive request (W-2 form), and potential spoofed sender address.
+                    </div>
+                    
+                    <div class="feedback" id="feedback2">
+                        Not likely social engineering. Normal business communication without suspicious elements.
+                    </div>
+                    
+                    <div class="feedback" id="feedback3">
+                        Not social engineering. This is standard IT communication with no manipulation attempt.
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="completion-section">
+            <h3 class="completion-title">Task Completion</h3>
+            <p class="completion-message">Please confirm you have read and understood the material to mark this task as complete.</p>
+            
+            <div class="checkbox-container">
+                <input type="checkbox" id="completion-checkbox">
+                <label for="completion-checkbox" class="checkbox-label">I confirm I have completed this task</label>
+            </div>
+            
+            <button id="complete-button" class="complete-button" disabled>Mark as Complete</button>
+        </div>
+    </div>
+
+    <script>
+        // Quiz functionality
+        function showFeedback(id, isCorrect) {
+            // Hide all feedback first
+            document.querySelectorAll('.feedback').forEach(fb => {
+                fb.style.display = 'none';
+                fb.classList.remove('correct', 'incorrect');
+            });
+            
+            // Show selected feedback
+            const feedback = document.getElementById('feedback' + id);
+            feedback.style.display = 'block';
+            feedback.classList.add(isCorrect ? 'correct' : 'incorrect');
+            
+            // Highlight selected option
+            document.querySelectorAll('.quiz-option').forEach(opt => {
+                opt.style.backgroundColor = '';
+                opt.style.borderColor = '';
+            });
+            
+            event.currentTarget.style.backgroundColor = isCorrect ? '#e8f5e9' : '#ffebee';
+            event.currentTarget.style.borderColor = isCorrect ? '#4caf50' : '#c62828';
+        }
+
+        // Enable complete button when checkbox is checked
+        const checkbox = document.getElementById('completion-checkbox');
+        const completeButton = document.getElementById('complete-button');
+        
+        checkbox.addEventListener('change', function() {
+            completeButton.disabled = !this.checked;
+        });
+        
+        // Handle completion
+        completeButton.addEventListener('click', function() {
+            alert('Task 2 marked as complete! You can now proceed to Task 3.');
+            // window.location.href = 'task3social.html';
+        });
+    </script>
+</body>
+</html>

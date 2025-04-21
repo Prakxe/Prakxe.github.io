@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Ninjas - Social Engineering: Real-World Examples</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        .sidebar {
+            width: 250px;
+            background-color: #1a2b3c;
+            color: white;
+            padding: 30px 20px;
+            height: 100vh;
+            position: fixed;
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .logo h1 {
+            font-size: 28px;
+            font-weight: bold;
+            line-height: 1;
+        }
+        
+        .logo h1:first-child {
+            color: #4fc3f7;
+        }
+        
+        .logo h1:last-child {
+            color: white;
+        }
+        
+        .nav-section {
+            margin-bottom: 30px;
+        }
+        
+        .nav-section h3 {
+            color: #4fc3f7;
+            margin-bottom: 15px;
+            font-size: 16px;
+            text-transform: uppercase;
+        }
+        
+        .nav-links a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 10px 0;
+            margin-bottom: 5px;
+            transition: all 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #4fc3f7;
+            transform: translateX(5px);
+        }
+        
+        .main-content {
+            margin-left: 250px;
+            padding: 40px;
+            width: calc(100% - 250px);
+        }
+        
+        .module-header {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .module-header h1 {
+            color: #1a2b3c;
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+        
+        .module-header p {
+            color: #666;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        
+        .case-study-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .task-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .task-number {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: #4fc3f7;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            margin-right: 15px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .task-title {
+            color: #1a2b3c;
+            font-size: 28px;
+        }
+        
+        .case-study {
+            margin: 30px 0;
+            padding: 25px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            border-left: 5px solid #4fc3f7;
+        }
+        
+        .case-study h3 {
+            color: #1a2b3c;
+            font-size: 22px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .case-study h3:before {
+            content: "🔍";
+            margin-right: 12px;
+            font-size: 24px;
+        }
+        
+        .case-study p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .case-study-details {
+            background-color: #f0f9ff;
+            padding: 20px;
+            border-radius: 6px;
+            margin: 15px 0;
+        }
+        
+        .case-study-details h4 {
+            color: #1a2b3c;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+        
+        .case-study-details ul {
+            margin-left: 20px;
+            color: #666;
+        }
+        
+        .case-study-details li {
+            margin-bottom: 8px;
+        }
+        
+        .lesson-learned {
+            background-color: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 6px 6px 0;
+        }
+        
+        .lesson-learned h4 {
+            color: #1a2b3c;
+            margin-bottom: 8px;
+        }
+        
+        .interactive-scenario {
+            background-color: #fff8e1;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 30px 0;
+            border-left: 5px solid #ffc107;
+        }
+        
+        .scenario-question {
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #1a2b3c;
+        }
+        
+        .scenario-options {
+            margin-left: 20px;
+        }
+        
+        .scenario-option {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .scenario-option:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .scenario-feedback {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 5px;
+            display: none;
+        }
+        
+        .correct-feedback {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+        
+        .incorrect-feedback {
+            background-color: #ffebee;
+            color: #c62828;
+        }
+        
+        .completion-section {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .completion-title {
+            color: #1a2b3c;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        
+        .completion-message {
+            color: #666;
+            margin-bottom: 25px;
+            font-size: 16px;
+        }
+        
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+        }
+        
+        .checkbox-label {
+            color: #1a2b3c;
+            font-size: 18px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+        
+        .complete-button {
+            background-color: #4fc3f7;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .complete-button:hover {
+            background-color: #3ba7d3;
+        }
+        
+        .complete-button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <h1>CYBER</h1>
+            <h1>NINJAS</h1>
+        </div>
+        
+        <div class="nav-section">
+            <h3>Menu</h3>
+            <div class="nav-links">
+                <a href="dashboard.html">DASHBOARD</a>
+                <a href="learningpath.html">LEARN</a>
+            </div>
+        </div>
+        
+        <div class="nav-section">
+            <h3>Quick Links</h3>
+            <div class="nav-links">
+                <a href="search.html">SEARCH</a>
+                <a href="profile.html">PROFILE</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="main-content">
+        <div class="module-header">
+            <h1>SOCIAL ENGINEERING AWARENESS</h1>
+            <p>LEARN FROM REAL-WORLD EXAMPLES OF SOCIAL ENGINEERING ATTACKS AND HOW TO PROTECT YOURSELF.</p>
+        </div>
+        
+        <div class="case-study-container">
+            <div class="task-header">
+                <div class="task-number">3</div>
+                <h2 class="task-title">REAL-WORLD EXAMPLES</h2>
+            </div>
+            
+            <div class="task-content">
+                <div class="case-study">
+                    <h3>The Twitter Bitcoin Scam (2020)</h3>
+                    <p>Hackers gained access to Twitter's internal systems and compromised high-profile accounts including Barack Obama, Elon Musk, and Bill Gates.</p>
+                    
+                    <div class="case-study-details">
+                        <h4>How It Happened:</h4>
+                        <ul>
+                            <li>Attackers used phone spear phishing ("vishing") to trick employees</li>
+                            <li>Gained credentials through a fake internal VPN portal</li>
+                            <li>Accessed admin tools to take over accounts</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="lesson-learned">
+                        <h4>Key Lesson:</h4>
+                        <p>Even tech-savvy organizations can fall victim to social engineering. Always verify requests for credentials, especially over phone calls.</p>
+                    </div>
+                </div>
+                
+                <div class="case-study">
+                    <h3>The Ubiquiti $46M Fraud (2015)</h3>
+                    <p>Attackers impersonated executives to trick finance staff into transferring millions to offshore accounts.</p>
+                    
+                    <div class="case-study-details">
+                        <h4>Attack Details:</h4>
+                        <ul>
+                            <li>Used spoofed emails appearing to come from executives</li>
+                            <li>Created fake documents with company letterhead</li>
+                            <li>Exploited time zone differences to prevent verification</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="lesson-learned">
+                        <h4>Key Lesson:</h4>
+                        <p>Financial requests must always be verified through multiple channels, especially for large transactions.</p>
+                    </div>
+                </div>
+                
+                <div class="case-study">
+                    <h3>The RSA SecurID Breach (2011)</h3>
+                    <p>Attackers compromised RSA's security systems through a simple phishing email with the subject "2011 Recruitment Plan".</p>
+                    
+                    <div class="case-study-details">
+                        <h4>Attack Timeline:</h4>
+                        <ul>
+                            <li>Targeted low-level employees with realistic-looking Excel attachment</li>
+                            <li>Exploited a zero-day vulnerability in Flash</li>
+                            <li>Gained access to SecurID token information</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="lesson-learned">
+                        <h4>Key Lesson:</h4>
+                        <p>Even security companies aren't immune. All employees must be vigilant about unexpected attachments.</p>
+                    </div>
+                </div>
+                
+                <div class="interactive-scenario">
+                    <h3>Interactive Scenario</h3>
+                    <p>Test your ability to apply these lessons to a real situation:</p>
+                    
+                    <div class="scenario-question">
+                        You receive an email from "HR@yourcompany.com" with the subject "Urgent: Your Account Will Be Locked". It contains a link to "verify your credentials". What should you do?
+                    </div>
+                    
+                    <div class="scenario-options">
+                        <div class="scenario-option" onclick="showScenarioFeedback(1, false)">
+                            Click the link and enter your credentials to prevent account lockout
+                        </div>
+                        <div class="scenario-option" onclick="showScenarioFeedback(2, true)">
+                            Forward the email to IT security and delete it without clicking
+                        </div>
+                        <div class="scenario-option" onclick="showScenarioFeedback(3, false)">
+                            Reply to the email asking if it's legitimate
+                        </div>
+                    </div>
+                    
+                    <div class="scenario-feedback" id="scenario-feedback1">
+                        <strong>Incorrect:</strong> Never enter credentials from an email link. This is a classic phishing attempt.
+                    </div>
+                    <div class="scenario-feedback" id="scenario-feedback2">
+                        <strong>Correct!</strong> Always report suspicious emails to IT and never interact with questionable links.
+                    </div>
+                    <div class="scenario-feedback" id="scenario-feedback3">
+                        <strong>Risky:</strong> Replying verifies your email is active, which helps attackers target you further.
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="completion-section">
+            <h3 class="completion-title">Task Completion</h3>
+            <p class="completion-message">Please confirm you have reviewed all case studies and scenarios to mark this task as complete.</p>
+            
+            <div class="checkbox-container">
+                <input type="checkbox" id="completion-checkbox">
+                <label for="completion-checkbox" class="checkbox-label">I confirm I have completed this task</label>
+            </div>
+            
+            <button id="complete-button" class="complete-button" disabled>Mark as Complete</button>
+        </div>
+    </div>
+
+    <script>
+        // Scenario feedback functionality
+        function showScenarioFeedback(id, isCorrect) {
+            // Hide all feedback first
+            document.querySelectorAll('.scenario-feedback').forEach(fb => {
+                fb.style.display = 'none';
+                fb.classList.remove('correct-feedback', 'incorrect-feedback');
+            });
+            
+            // Show selected feedback
+            const feedback = document.getElementById('scenario-feedback' + id);
+            feedback.style.display = 'block';
+            feedback.classList.add(isCorrect ? 'correct-feedback' : 'incorrect-feedback');
+            
+            // Highlight selected option
+            document.querySelectorAll('.scenario-option').forEach(opt => {
+                opt.style.backgroundColor = '';
+            });
+            
+            event.currentTarget.style.backgroundColor = isCorrect ? '#e8f5e9' : '#ffebee';
+        }
+
+        // Enable complete button when checkbox is checked
+        const checkbox = document.getElementById('completion-checkbox');
+        const completeButton = document.getElementById('complete-button');
+        
+        checkbox.addEventListener('change', function() {
+            completeButton.disabled = !this.checked;
+        });
+        
+        // Handle completion
+        completeButton.addEventListener('click', function() {
+            alert('Task 3 marked as complete! You can now proceed to Task 4.');
+            // window.location.href = 'task4social.html';
+        });
+    </script>
+</body>
+</html>

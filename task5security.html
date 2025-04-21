@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Ninjas - Task 5: Data Protection & Backup Strategies</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        .sidebar {
+            width: 250px;
+            background-color: #1a2b3c;
+            color: white;
+            padding: 30px 20px;
+            height: 100vh;
+            position: fixed;
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .logo h1 {
+            font-size: 28px;
+            font-weight: bold;
+            line-height: 1;
+        }
+        
+        .logo h1:first-child {
+            color: #4fc3f7;
+        }
+        
+        .logo h1:last-child {
+            color: white;
+        }
+        
+        .nav-section {
+            margin-bottom: 30px;
+        }
+        
+        .nav-section h3 {
+            color: #4fc3f7;
+            margin-bottom: 15px;
+            font-size: 16px;
+            text-transform: uppercase;
+        }
+        
+        .nav-links a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 10px 0;
+            margin-bottom: 5px;
+            transition: all 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #4fc3f7;
+            transform: translateX(5px);
+        }
+        
+        .main-content {
+            margin-left: 250px;
+            padding: 40px;
+            width: calc(100% - 250px);
+        }
+        
+        .module-header {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .module-header h1 {
+            color: #1a2b3c;
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+        
+        .module-header p {
+            color: #666;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        
+        .task-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .task-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .task-number {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: #4fc3f7;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            margin-right: 15px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .task-title {
+            color: #1a2b3c;
+            font-size: 28px;
+        }
+        
+        .task-content {
+            padding: 20px 0;
+        }
+        
+        .task-content p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+        
+        .data-disaster {
+            background-color: #ffebee;
+            border-left: 4px solid #f44336;
+            padding: 20px;
+            margin: 25px 0;
+            display: flex;
+        }
+        
+        .disaster-icon {
+            font-size: 24px;
+            margin-right: 15px;
+            color: #f44336;
+        }
+        
+        .disaster-content h3 {
+            color: #1a2b3c;
+            margin-bottom: 10px;
+        }
+        
+        .backup-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+        
+        .method-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            transition: all 0.3s;
+        }
+        
+        .method-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .method-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .method-icon {
+            width: 40px;
+            height: 40px;
+            margin-right: 15px;
+        }
+        
+        .method-name {
+            color: #1a2b3c;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        .method-desc {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+        
+        .pros-cons {
+            margin-top: 15px;
+        }
+        
+        .pros {
+            color: #4caf50;
+            font-weight: bold;
+        }
+        
+        .cons {
+            color: #f44336;
+            font-weight: bold;
+        }
+        
+        .backup-rule {
+            background-color: #e8f5e9;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+        }
+        
+        .rule-icon {
+            font-size: 24px;
+            margin-right: 15px;
+            color: #4caf50;
+        }
+        
+        .data-classification {
+            margin: 30px 0;
+        }
+        
+        .classification-levels {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .level-card {
+            flex: 1;
+            min-width: 200px;
+            border-radius: 8px;
+            padding: 15px;
+            color: white;
+        }
+        
+        .level-public {
+            background-color: #4fc3f7;
+        }
+        
+        .level-internal {
+            background-color: #66bb6a;
+        }
+        
+        .level-confidential {
+            background-color: #ffa726;
+        }
+        
+        .level-secret {
+            background-color: #f44336;
+        }
+        
+        .level-name {
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+        
+        .level-desc {
+            font-size: 13px;
+            opacity: 0.9;
+        }
+        
+        .encryption-demo {
+            background-color: #f0f8ff;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 30px 0;
+        }
+        
+        .demo-title {
+            color: #1a2b3c;
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+        
+        .demo-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .demo-box {
+            flex: 1;
+            min-width: 250px;
+            text-align: center;
+        }
+        
+        .demo-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #666;
+        }
+        
+        .demo-text {
+            padding: 15px;
+            background-color: white;
+            border-radius: 8px;
+            margin: 10px 0;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .demo-label {
+            font-weight: bold;
+            color: #1a2b3c;
+            margin-bottom: 5px;
+        }
+        
+        .completion-section {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .completion-title {
+            color: #1a2b3c;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        
+        .completion-message {
+            color: #666;
+            margin-bottom: 25px;
+            font-size: 16px;
+        }
+        
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+        }
+        
+        .checkbox-label {
+            color: #1a2b3c;
+            font-size: 18px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+        
+        .complete-button {
+            background-color: #4fc3f7;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .complete-button:hover {
+            background-color: #3ba7d3;
+        }
+        
+        .complete-button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <h1>CYBER</h1>
+            <h1>NINJAS</h1>
+        </div>
+        
+        <div class="nav-section">
+            <h3>Menu</h3>
+            <div class="nav-links">
+                <a href="dashboard.html">DASHBOARD</a>
+                <a href="learningpath.html">LEARN</a>
+            </div>
+        </div>
+        
+        <div class="nav-section">
+            <h3>Quick Links</h3>
+            <div class="nav-links">
+                <a href="search.html">SEARCH</a>
+                <a href="profile.html">PROFILE</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="main-content">
+        <div class="module-header">
+            <h1>SECURITY BEST PRACTICES</h1>
+            <p>Essential cybersecurity habits to protect yourself and your organization from digital threats.</p>
+        </div>
+        
+        <div class="task-container">
+            <div class="task-header">
+                <div class="task-number">5</div>
+                <h2 class="task-title">TASK 5: DATA PROTECTION & BACKUP STRATEGIES</h2>
+            </div>
+            
+            <div class="task-content">
+                <p>Protecting sensitive data and maintaining reliable backups are critical defenses against data loss, ransomware, and breaches.</p>
+                
+                <div class="data-disaster">
+                    <div class="disaster-icon">⚠️</div>
+                    <div class="disaster-content">
+                        <h3>Data Disaster Reality Check</h3>
+                        <p>60% of companies that lose their data shut down within 6 months. Only 43% of businesses test their backups regularly, and 75% of those tests reveal failures.</p>
+                    </div>
+                </div>
+                
+                <h3 style="color: #1a2b3c; margin: 25px 0 15px;">The 3-2-1 Backup Rule</h3>
+                
+                <div class="backup-rule">
+                    <div class="rule-icon">🔁</div>
+                    <div>
+                        <strong>3 Copies</strong> of your data (original + 2 backups)<br>
+                        <strong>2 Different Media</strong> (external drive + cloud)<br>
+                        <strong>1 Offsite Copy</strong> (protected from local disasters)
+                    </div>
+                </div>
+                
+                <div class="backup-methods">
+                    <!-- Cloud Backup Card -->
+                    <div class="method-card">
+                        <div class="method-header">
+                            <svg class="method-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#1a2b3c">
+                                <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z"/>
+                            </svg>
+                            <div class="method-name">Cloud Backup</div>
+                        </div>
+                        <p class="method-desc">Automated online backup services like Google Drive, Dropbox, or specialized backup solutions.</p>
+                        <div class="pros-cons">
+                            <span class="pros">✓ Accessible anywhere</span><br>
+                            <span class="pros">✓ Automatic versioning</span><br>
+                            <span class="cons">✗ Ongoing costs</span><br>
+                            <span class="cons">✗ Slower full restores</span>
+                        </div>
+                    </div>
+                    
+                    <!-- External Drive Card -->
+                    <div class="method-card">
+                        <div class="method-header">
+                            <svg class="method-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#1a2b3c">
+                                <path d="M4 4h16v16H4V4zm2 2v12h12V6H6zm5 2h2v8h-2V8z"/>
+                            </svg>
+                            <div class="method-name">External Drives</div>
+                        </div>
+                        <p class="method-desc">Physical storage devices like HDDs, SSDs, or NAS systems kept in a secure location.</p>
+                        <div class="pros-cons">
+                            <span class="pros">✓ Fast backup/restore</span><br>
+                            <span class="pros">✓ One-time cost</span><br>
+                            <span class="cons">✗ Can fail or be damaged</span><br>
+                            <span class="cons">✗ Manual process</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Hybrid Solution Card -->
+                    <div class="method-card">
+                        <div class="method-header">
+                            <svg class="method-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#1a2b3c">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm4.59-12.42L10 14.17l-2.59-2.58L6 13l4 4 8-8z"/>
+                            </svg>
+                            <div class="method-name">Hybrid Solution</div>
+                        </div>
+                        <p class="method-desc">Combination of cloud and local backups for maximum protection and flexibility.</p>
+                        <div class="pros-cons">
+                            <span class="pros">✓ Best of both worlds</span><br>
+                            <span class="pros">✓ Disaster recovery</span><br>
+                            <span class="cons">✗ More complex</span><br>
+                            <span class="cons">✗ Higher cost</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="data-classification">
+                    <h3 style="color: #1a2b3c; margin: 25px 0 15px;">Data Classification & Protection</h3>
+                    <p>Not all data requires the same level of protection. Classify data based on sensitivity:</p>
+                    
+                    <div class="classification-levels">
+                        <div class="level-card level-public">
+                            <div class="level-name">Public</div>
+                            <div class="level-desc">Company newsletters, marketing materials</div>
+                        </div>
+                        <div class="level-card level-internal">
+                            <div class="level-name">Internal</div>
+                            <div class="level-desc">Meeting notes, internal policies</div>
+                        </div>
+                        <div class="level-card level-confidential">
+                            <div class="level-name">Confidential</div>
+                            <div class="level-desc">Employee records, contracts</div>
+                        </div>
+                        <div class="level-card level-secret">
+                            <div class="level-name">Secret</div>
+                            <div class="level-desc">Financial data, trade secrets</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="encryption-demo">
+                    <h3 class="demo-title">Data Encryption Demonstration</h3>
+                    <div class="demo-container">
+                        <div class="demo-box">
+                            <div class="demo-label">Original Data</div>
+                            <div class="demo-text">Salary_Report_2023.xlsx</div>
+                        </div>
+                        <div class="demo-arrow">→</div>
+                        <div class="demo-box">
+                            <div class="demo-label">Encrypted</div>
+                            <div class="demo-text">a9F7g2Hj4kL8pQ3xZ0.pdf.enc</div>
+                        </div>
+                        <div class="demo-arrow">→</div>
+                        <div class="demo-box">
+                            <div class="demo-label">Decrypted</div>
+                            <div class="demo-text">Salary_Report_2023.xlsx</div>
+                        </div>
+                    </div>
+                    <p style="color: #666; text-align: center; margin-top: 15px;">
+                        Use encryption tools like BitLocker (Windows), FileVault (Mac), or VeraCrypt for sensitive files
+                    </p>
+                </div>
+                
+                <h3 style="color: #1a2b3c; margin: 30px 0 15px;">Backup Best Practices:</h3>
+                <ul style="color: #666; line-height: 1.6; margin-bottom: 15px; padding-left: 20px;">
+                    <li><strong>Test restores</strong> quarterly - backups are useless if they don't work</li>
+                    <li><strong>Automate</strong> backups to prevent human error</li>
+                    <li><strong>Versioning</strong> keeps multiple file versions (protects against ransomware)</li>
+                    <li><strong>Air-gap</strong> critical backups (disconnect after backup)</li>
+                    <li><strong>Document</strong> your backup procedures and recovery steps</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="completion-section">
+            <h3 class="completion-title">Task Completion</h3>
+            <p class="completion-message">Please confirm you have read and understood the material to mark this task as complete.</p>
+            
+            <div class="checkbox-container">
+                <input type="checkbox" id="completion-checkbox">
+                <label for="completion-checkbox" class="checkbox-label">I confirm I have completed this task</label>
+            </div>
+            
+            <button id="complete-button" class="complete-button" disabled>Mark as Complete</button>
+        </div>
+    </div>
+
+    <script>
+        // Enable complete button when checkbox is checked
+        const checkbox = document.getElementById('completion-checkbox');
+        const completeButton = document.getElementById('complete-button');
+        
+        checkbox.addEventListener('change', function() {
+            completeButton.disabled = !this.checked;
+        });
+        
+        // Handle completion
+        completeButton.addEventListener('click', function() {
+            alert('Task 5 marked as complete! You have finished the Security Best Practices module.');
+            // window.location.href = 'dashboard.html';
+        });
+    </script>
+</body>
+</html>

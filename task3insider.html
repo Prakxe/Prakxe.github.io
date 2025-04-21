@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Ninjas - Insider Threats: Red Flags & Warning Signs</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        .sidebar {
+            width: 250px;
+            background-color: #1a2b3c;
+            color: white;
+            padding: 30px 20px;
+            height: 100vh;
+            position: fixed;
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .logo h1 {
+            font-size: 28px;
+            font-weight: bold;
+            line-height: 1;
+        }
+        
+        .logo h1:first-child {
+            color: #4fc3f7;
+        }
+        
+        .logo h1:last-child {
+            color: white;
+        }
+        
+        .nav-section {
+            margin-bottom: 30px;
+        }
+        
+        .nav-section h3 {
+            color: #4fc3f7;
+            margin-bottom: 15px;
+            font-size: 16px;
+            text-transform: uppercase;
+        }
+        
+        .nav-links a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 10px 0;
+            margin-bottom: 5px;
+            transition: all 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #4fc3f7;
+            transform: translateX(5px);
+        }
+        
+        .main-content {
+            margin-left: 250px;
+            padding: 40px;
+            width: calc(100% - 250px);
+        }
+        
+        .module-header {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .module-header h1 {
+            color: #1a2b3c;
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+        
+        .module-header p {
+            color: #666;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        
+        .task-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .task-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .task-number {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: #4fc3f7;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            margin-right: 15px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .task-title {
+            color: #1a2b3c;
+            font-size: 28px;
+        }
+        
+        /* NEW INTERACTIVE ELEMENTS */
+        .scenario-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        .scenario {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            border-left: 5px solid #4fc3f7;
+            transition: all 0.3s;
+        }
+        
+        .scenario.active {
+            background-color: #e3f2fd;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .scenario-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .scenario-title {
+            font-size: 20px;
+            color: #1a2b3c;
+            font-weight: bold;
+        }
+        
+        .scenario-icon {
+            font-size: 24px;
+            transition: transform 0.3s;
+        }
+        
+        .scenario.active .scenario-icon {
+            transform: rotate(45deg);
+        }
+        
+        .scenario-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        
+        .scenario.active .scenario-content {
+            max-height: 1000px;
+            margin-top: 15px;
+        }
+        
+        .warning-signs {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .warning-card {
+            background: white;
+            border-radius: 6px;
+            padding: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            border-top: 3px solid #ff9800;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .warning-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .warning-card h4 {
+            color: #1a2b3c;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .warning-card h4:before {
+            content: "🔍";
+            margin-right: 8px;
+        }
+        
+        .decision-point {
+            background-color: #e8f5e9;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #4caf50;
+        }
+        
+        .decision-question {
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #1a2b3c;
+        }
+        
+        .decision-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .decision-option {
+            background: white;
+            padding: 12px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid #ddd;
+        }
+        
+        .decision-option:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .decision-option.correct {
+            background-color: #e8f5e9;
+            border-color: #4caf50;
+        }
+        
+        .decision-option.incorrect {
+            background-color: #ffebee;
+            border-color: #f44336;
+        }
+        
+        .feedback-message {
+            padding: 12px;
+            margin-top: 10px;
+            border-radius: 6px;
+            display: none;
+        }
+        
+        .feedback-message.show {
+            display: block;
+        }
+        
+        .feedback-correct {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+        
+        .feedback-incorrect {
+            background-color: #ffebee;
+            color: #c62828;
+        }
+        
+        .completion-section {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .completion-title {
+            color: #1a2b3c;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        
+        .completion-message {
+            color: #666;
+            margin-bottom: 25px;
+            font-size: 16px;
+        }
+        
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+        }
+        
+        .checkbox-label {
+            color: #1a2b3c;
+            font-size: 18px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+        
+        .complete-button {
+            background-color: #4fc3f7;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .complete-button:hover {
+            background-color: #3ba7d3;
+        }
+        
+        .complete-button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        
+        .progress-tracker {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        
+        .progress-step {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            position: relative;
+        }
+        
+        .progress-step:not(:last-child):after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            right: 0;
+            width: 100%;
+            height: 2px;
+            background: #ddd;
+            z-index: 1;
+        }
+        
+        .step-number {
+            width: 30px;
+            height: 30px;
+            background-color: #ddd;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 5px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .progress-step.active .step-number {
+            background-color: #4fc3f7;
+            color: white;
+        }
+        
+        .step-label {
+            font-size: 12px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <h1>CYBER</h1>
+            <h1>NINJAS</h1>
+        </div>
+        
+        <div class="nav-section">
+            <h3>Menu</h3>
+            <div class="nav-links">
+                <a href="dashboard.html">DASHBOARD</a>
+                <a href="learningpath.html">LEARN</a>
+            </div>
+        </div>
+        
+        <div class="nav-section">
+            <h3>Quick Links</h3>
+            <div class="nav-links">
+                <a href="search.html">SEARCH</a>
+                <a href="profile.html">PROFILE</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="main-content">
+        <div class="module-header">
+            <h1>INSIDER THREATS</h1>
+            <p>LEARN TO RECOGNIZE THE RED FLAGS AND WARNING SIGNS OF POTENTIAL INSIDER THREATS THROUGH INTERACTIVE SCENARIOS.</p>
+        </div>
+        
+        <div class="task-container">
+            <div class="task-header">
+                <div class="task-number">3</div>
+                <h2 class="task-title">RED FLAGS & WARNING SIGNS</h2>
+            </div>
+            
+            <div class="progress-tracker">
+                <div class="progress-step active">
+                    <div class="step-number">1</div>
+                    <div class="step-label">Learn Signs</div>
+                </div>
+                <div class="progress-step">
+                    <div class="step-number">2</div>
+                    <div class="step-label">Scenario 1</div>
+                </div>
+                <div class="progress-step">
+                    <div class="step-number">3</div>
+                    <div class="step-label">Scenario 2</div>
+                </div>
+                <div class="progress-step">
+                    <div class="step-number">4</div>
+                    <div class="step-label">Review</div>
+                </div>
+            </div>
+            
+            <div class="scenario-container">
+                <div class="scenario active" id="warning-signs">
+                    <div class="scenario-header">
+                        <h3 class="scenario-title">Common Warning Signs</h3>
+                        <span class="scenario-icon">+</span>
+                    </div>
+                    <div class="scenario-content">
+                        <p>Insider threats often exhibit detectable patterns before causing harm. Here are key behaviors to watch for:</p>
+                        
+                        <div class="warning-signs">
+                            <div class="warning-card">
+                                <h4>Unusual Access Patterns</h4>
+                                <p>Accessing systems at odd hours or downloading large amounts of data not needed for their role.</p>
+                            </div>
+                            
+                            <div class="warning-card">
+                                <h4>Policy Violations</h4>
+                                <p>Repeatedly bypassing security protocols or using unauthorized devices/software.</p>
+                            </div>
+                            
+                            <div class="warning-card">
+                                <h4>Behavioral Changes</h4>
+                                <p>Sudden mood swings, increased secrecy, or expressing dissatisfaction with the company.</p>
+                            </div>
+                            
+                            <div class="warning-card">
+                                <h4>Financial Stress</h4>
+                                <p>Unexplained wealth or conversely, visible financial difficulties that might motivate theft.</p>
+                            </div>
+                            
+                            <div class="warning-card">
+                                <h4>Unauthorized Devices</h4>
+                                <p>Using USB drives or personal cloud storage for work documents without approval.</p>
+                            </div>
+                            
+                            <div class="warning-card">
+                                <h4>Job Dissatisfaction</h4>
+                                <p>Publicly complaining about the company or managers, especially when combined with other signs.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="decision-point">
+                            <div class="decision-question">Which of these would be the MOST concerning combination of behaviors?</div>
+                            <div class="decision-options">
+                                <div class="decision-option" onclick="checkDecision(this, false)">An employee who occasionally works late and listens to music at their desk</div>
+                                <div class="decision-option" onclick="checkDecision(this, false)">A worker who complains about their salary during performance reviews</div>
+                                <div class="decision-option" onclick="checkDecision(this, true)">An IT staffer downloading customer databases after being denied a promotion</div>
+                                <div class="decision-option" onclick="checkDecision(this, false)">A manager who uses personal email for some work communication</div>
+                            </div>
+                            <div class="feedback-message feedback-correct">
+                                Correct! The combination of privileged access, negative work event, and suspicious data activity represents the highest risk scenario.
+                            </div>
+                            <div class="feedback-message feedback-incorrect">
+                                Not quite. While some of these behaviors might be concerning alone, the IT staffer scenario shows multiple high-risk factors combined.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="scenario" id="scenario1">
+                    <div class="scenario-header">
+                        <h3 class="scenario-title">Scenario: The Disgruntled Developer</h3>
+                        <span class="scenario-icon">+</span>
+                    </div>
+                    <div class="scenario-content">
+                        <p>Alex, a senior developer, has been with the company for 5 years. Recently:</p>
+                        <ul style="margin: 15px 0; padding-left: 20px; color: #666; line-height: 1.6;">
+                            <li>Was passed over for a promotion he expected</li>
+                            <li>Has been making negative comments about management in team chats</li>
+                            <li>Started accessing source code repositories he hasn't worked with before</li>
+                            <li>Downloaded the entire customer database "for testing purposes"</li>
+                        </ul>
+                        
+                        <div class="decision-point">
+                            <div class="decision-question">What should you do in this situation?</div>
+                            <div class="decision-options">
+                                <div class="decision-option" onclick="checkDecision(this, false, 'scenario1')">Ignore it - senior employees deserve some leeway</div>
+                                <div class="decision-option" onclick="checkDecision(this, true, 'scenario1')">Report to security with specific observations and timestamps</div>
+                                <div class="decision-option" onclick="checkDecision(this, false, 'scenario1')">Confront Alex directly about his behavior</div>
+                                <div class="decision-option" onclick="checkDecision(this, false, 'scenario1')">Wait to see if the behavior continues for another week</div>
+                            </div>
+                            <div class="feedback-message feedback-correct">
+                                Correct! Documenting and reporting concerning behaviors allows security professionals to properly investigate while protecting both the company and employees.
+                            </div>
+                            <div class="feedback-message feedback-incorrect">
+                                Not the best choice. Insider threats require professional handling - confronting the employee could escalate the situation, while ignoring risks significant damage.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="scenario" id="scenario2">
+                    <div class="scenario-header">
+                        <h3 class="scenario-title">Scenario: The Financial Analyst</h3>
+                        <span class="scenario-icon">+</span>
+                    </div>
+                    <div class="scenario-content">
+                        <p>Jamie in Accounting has:</p>
+                        <ul style="margin: 15px 0; padding-left: 20px; color: #666; line-height: 1.6;">
+                            <li>Recently started working late nights and weekends without explanation</li>
+                            <li>Been seen taking photos of her screen with her phone</li>
+                            <li>Accessed the financial system from a foreign IP address during vacation</li>
+                            <li>Suddenly paid off significant personal debt</li>
+                        </ul>
+                        
+                        <div class="decision-point">
+                            <div class="decision-question">Which red flags are MOST concerning here?</div>
+                            <div class="decision-options">
+                                <div class="decision-option" onclick="checkDecision(this, false, 'scenario2')">Working late and the foreign login could have innocent explanations</div>
+                                <div class="decision-option" onclick="checkDecision(this, true, 'scenario2')">The combination of screen photos, foreign access, and sudden wealth</div>
+                                <div class="decision-option" onclick="checkDecision(this, false, 'scenario2')">Only the screen photos are truly concerning</div>
+                                <div class="decision-option" onclick="checkDecision(this, false, 'scenario2')">The paid-off debt is a personal matter, not a security issue</div>
+                            </div>
+                            <div class="feedback-message feedback-correct">
+                                Exactly right. While each item alone might be explainable, the combination suggests potential financial data theft or fraud.
+                            </div>
+                            <div class="feedback-message feedback-incorrect">
+                                Not quite. Insider threat detection requires looking at patterns of behavior, not just individual actions in isolation.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="completion-section">
+            <h3 class="completion-title">Task Completion</h3>
+            <p class="completion-message">Please confirm you have reviewed all scenarios and understand the warning signs to mark this task as complete.</p>
+            
+            <div class="checkbox-container">
+                <input type="checkbox" id="completion-checkbox">
+                <label for="completion-checkbox" class="checkbox-label">I confirm I have completed this task</label>
+            </div>
+            
+            <button id="complete-button" class="complete-button" disabled>Mark as Complete</button>
+        </div>
+    </div>
+
+    <script>
+        // Scenario expand/collapse functionality
+        document.querySelectorAll('.scenario-header').forEach(header => {
+            header.addEventListener('click', function() {
+                const scenario = this.parentElement;
+                scenario.classList.toggle('active');
+                
+                // Update progress tracker
+                if (scenario.id === 'warning-signs' && scenario.classList.contains('active')) {
+                    updateProgress(1);
+                } else if (scenario.id === 'scenario1' && scenario.classList.contains('active')) {
+                    updateProgress(2);
+                } else if (scenario.id === 'scenario2' && scenario.classList.contains('active')) {
+                    updateProgress(3);
+                }
+            });
+        });
+        
+        // Update progress tracker
+        function updateProgress(step) {
+            document.querySelectorAll('.progress-step').forEach((stepEl, index) => {
+                if (index < step) {
+                    stepEl.classList.add('active');
+                } else {
+                    stepEl.classList.remove('active');
+                }
+            });
+        }
+        
+        // Decision point checking
+        function checkDecision(element, isCorrect, scenarioId) {
+            // Remove highlights from all options
+            element.parentElement.querySelectorAll('.decision-option').forEach(opt => {
+                opt.classList.remove('correct', 'incorrect');
+            });
+            
+            // Hide all feedback messages
+            element.parentElement.querySelectorAll('.feedback-message').forEach(msg => {
+                msg.classList.remove('show');
+            });
+            
+            // Highlight selected option
+            element.classList.add(isCorrect ? 'correct' : 'incorrect');
+            
+            // Show appropriate feedback
+            const feedback = isCorrect 
+                ? element.parentElement.querySelector('.feedback-correct')
+                : element.parentElement.querySelector('.feedback-incorrect');
+            feedback.classList.add('show');
+            
+            // Mark scenario as completed in progress tracker if it's the last decision point
+            if (scenarioId === 'scenario2') {
+                updateProgress(4);
+            }
+        }
+        
+        // Enable complete button when checkbox is checked
+        const checkbox = document.getElementById('completion-checkbox');
+        const completeButton = document.getElementById('complete-button');
+        
+        checkbox.addEventListener('change', function() {
+            completeButton.disabled = !this.checked;
+        });
+        
+        // Handle completion
+        completeButton.addEventListener('click', function() {
+            alert('Task 3 marked as complete! You can now proceed to Task 4.');
+            // window.location.href = 'task4insider.html';
+        });
+    </script>
+</body>
+</html>
